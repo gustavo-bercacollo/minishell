@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 14:17:43 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/11/16 14:18:38 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/11/16 16:13:54 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,16 @@
 
 int	main(void)
 {
-	
+	char	*line;
+
+	while (1)
+	{
+		line = readline("minishell> ");
+		if (!line)
+			break ;
+		if (*line)
+			add_history(line);
+		free(line);
+	}
 	return (0);
 }
