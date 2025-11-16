@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 14:17:43 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/11/16 16:13:54 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/11/16 18:43:17 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	main(void)
 {
 	char	*line;
+	char	**args;
 
 	while (1)
 	{
@@ -23,6 +24,10 @@ int	main(void)
 			break ;
 		if (*line)
 			add_history(line);
+		args = ft_split(line, ' ');
+		for (int i = 0; args[i]; i++)
+			printf("arg[%d] = %s\n", i, args[i]);
+		
 		free(line);
 	}
 	return (0);

@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-
-
+#include "ft_non_standard/ft_non_standard.h"
 
 #endif
