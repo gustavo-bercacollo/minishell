@@ -32,10 +32,10 @@ typedef enum e_toktype
 
 typedef struct s_token
 {
-	char			*value;
-	t_toktype		type;
-	struct s_token	*list;
-}	t_token;
+    char            *value;
+    t_toktype       type;
+    struct s_token  *next;
+}   t_token;
 
 
 typedef struct t_shell
