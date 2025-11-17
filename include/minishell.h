@@ -37,6 +37,15 @@ typedef struct s_token
     struct s_token  *next;
 }   t_token;
 
+typedef struct s_command
+{
+    char 	**argv;
+    char 	*infile;
+    char 	*outfile;
+    int  	append;
+    int  	heredoc;
+    struct 	s_command *next;
+}   t_command;
 
 typedef struct t_shell
 {
