@@ -6,27 +6,11 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:18:06 by klima-do          #+#    #+#             */
-/*   Updated: 2025/11/17 14:40:59 by klima-do         ###   ########.fr       */
+/*   Updated: 2025/11/17 18:00:39 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	**ft_free_split(char **arr_ptr)
-{
-	int	index;
-
-	index = 0;
-	if (!arr_ptr)
-		return (NULL);
-	while (arr_ptr[index])
-	{
-		free(arr_ptr[index]);
-		index++;
-	}
-	free(arr_ptr);
-	return (NULL);
-}
 
 char	*find_env_path(char **envp)
 {

@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:08:27 by klima-do          #+#    #+#             */
-/*   Updated: 2025/10/02 17:36:11 by klima-do         ###   ########.fr       */
+/*   Updated: 2025/11/17 17:58:09 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,20 +79,4 @@ static int	split_fill(char **arr, const char *s, const char c, size_t i)
 	if (!arr[i])
 		return (0);
 	return (w_len);
-}
-
-char	**ft_free_split(char **arr_ptr)
-{
-	int	index;
-
-	index = 0;
-	if (!arr_ptr)
-		return (NULL);
-	while (arr_ptr[index])
-	{
-		free(arr_ptr[index]);
-		index++;
-	}
-	free(arr_ptr);
-	return (NULL);
 }
