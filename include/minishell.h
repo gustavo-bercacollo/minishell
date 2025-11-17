@@ -18,6 +18,7 @@
 #include <term.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include "../libft/libft.h"
 
 typedef enum e_toktype
 {
@@ -57,5 +58,6 @@ void    executor(t_shell *ms);
 
 /* Utils */
 void    free_tokens(t_token *list);
+char	*get_path_prompt(void);
 
 #endif
