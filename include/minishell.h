@@ -1,9 +1,23 @@
 #ifndef MINI_SHELL_H
 #define MINI_SHELL_H
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <fcntl.h>
+#include <signal.h>
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <errno.h>
+#include <string.h>
+#include <dirent.h>
+#include <termios.h>
+#include <sys/ioctl.h>
+#include <curses.h>
+#include <term.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 typedef enum e_toktype
 {
@@ -38,6 +52,7 @@ t_token *tokenize(char *input);
 void    parser(t_shell *ms);
 
 /* Exec */
+char	*get_path(char **envp, char *cmd);
 void    executor(t_shell *ms);
 
 /* Utils */
