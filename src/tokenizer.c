@@ -6,7 +6,14 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 14:33:46 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/11/17 14:33:47 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/11/17 15:14:32 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
+
+void	skip_spaces(char **s)
+{
+	while (**s && (**s == ' ' || **s == '\t'))
+		(*s)++;
+}
