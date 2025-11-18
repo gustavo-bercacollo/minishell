@@ -61,7 +61,7 @@ SRCS = \
 	$(STACK_DIR)/init_stack.c\
 	$(STACK_DIR)/stack_clear.c\
 	$(STACK_DIR)/find_last.c\
-	manage_memory/ft_free_split.c
+	memory_management/ft_free_split.c
 
 OBJS = $(SRCS:.c=.o)
 BONUS_OBJS = $(BONUS_SRCS:.c=.o)

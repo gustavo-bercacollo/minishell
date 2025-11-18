@@ -6,7 +6,7 @@
 #    By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/17 15:37:39 by klima-do          #+#    #+#              #
-#    Updated: 2025/11/17 17:53:59 by gbercaco         ###   ########.fr        #
+#    Updated: 2025/11/18 18:05:10 by gbercaco         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ LIBFT = $(LIBFT_DIR)/libft.a
 SRCS = src/main.c \
        src/get_prompt_path.c \
        src/get_path.c \
-       src/tokenizer.c
+       src/tokenizer.c \
+       src/utills_tokenizer.c
 
 OBJS = $(SRCS:.c=.o)
 
