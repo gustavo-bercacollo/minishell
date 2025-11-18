@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:56:18 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/11/18 18:00:59 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/11/18 19:28:15 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,35 +87,3 @@ t_token	*read_quotes(char **s)
 	return (new_token(word, TOK_WORD));
 }
 
-t_token	*read_operator(char **s)
-{
-	char	c;
-
-	c = **s;
-	if (c == '|')
-	{
-		(*s)++;
-		return (new_token(ft_strdup("|"), TOK_PIPE));
-	}
-	else if (c == '>')
-	{
-		(*s)++;
-		if (**s == '>')
-		{
-			(*s)++;
-			return (new_token(ft_strdup(">>"), TOK_REDIR_APPEND));
-		}
-		return (new_token(ft_strdup(">"), TOK_REDIR_OUT));
-	}
-	else if (c == '<')
-	{
-		(*s)++;
-		if (**s == '<')
-		{
-			(*s)++;
-			return (new_token(ft_strdup("<<"), TOK_HEREDOC));
-		}
-		return (new_token(ft_strdup("<"), TOK_REDIR_IN));
-	}
-	return (NULL);
-}
