@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+         #
+#    By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/17 15:37:39 by klima-do          #+#    #+#              #
-#    Updated: 2025/11/18 19:29:51 by gbercaco         ###   ########.fr        #
+#    Updated: 2025/11/19 15:50:53 by klima-do         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,11 +20,12 @@ LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 SRCS = src/main.c \
+	   src/Builtins/builtin_echo.c
        src/get_prompt_path.c \
        src/get_path.c \
-       src/tokenizer.c \
-       src/utills_tokenizer.c \
-       src/read_operators.c
+       src/Parser/tokenizer.c \
+       src/Parser/utills_tokenizer.c \
+       src/Parser/read_operators.c\
 
 OBJS = $(SRCS:.c=.o)
 

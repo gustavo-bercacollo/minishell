@@ -58,6 +58,8 @@ typedef struct t_shell
 /* Tokenizer */
 t_token *tokenize(char *comand);
 
+int	builtin_echo(char **argv);
+
 /* Parser */
 void    parser(t_shell *ms);
 
