@@ -18,6 +18,7 @@
 #include <term.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include "../libft/libft.h"
 
 typedef enum e_toktype
 {
@@ -31,11 +32,20 @@ typedef enum e_toktype
 
 typedef struct s_token
 {
-	char			*value;
-	t_toktype		type;
-	struct s_token	*list;
-}	t_token;
+    char            *value;
+    t_toktype       type;
+    struct s_token  *next;
+}   t_token;
 
+typedef struct s_command
+{
+    char 	**argv;
+    char 	*infile;
+    char 	*outfile;
+    int  	append;
+    int  	heredoc;
+    struct 	s_command *next;
+}   t_command;
 
 typedef struct t_shell
 {
@@ -46,7 +56,7 @@ typedef struct t_shell
 }	t_shell;
 
 /* Tokenizer */
-t_token *tokenize(char *input);
+t_token *tokenize(char *comand);
 
 /* Parser */
 void    parser(t_shell *ms);
@@ -55,7 +65,17 @@ void    parser(t_shell *ms);
 char	*get_path(char **envp, char *cmd);
 void    executor(t_shell *ms);
 
+/* Utils Tokenizer*/
+void	skip_spaces(char **s);
+t_token	*new_token(char *value, t_toktype type);
+char	*ft_strndup(const char *s, size_t n);
+t_token	*read_word(char **s);
+t_token	*read_quotes(char **s);
+t_token	*read_operator(char **s);
+
+
 /* Utils */
 void    free_tokens(t_token *list);
+char	*get_path_prompt(void);
 
 #endif
