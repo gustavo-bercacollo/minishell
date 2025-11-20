@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 17:50:25 by klima-do          #+#    #+#             */
-/*   Updated: 2025/11/20 16:38:17 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/11/20 18:04:25 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	set_infile(t_token **tok, t_command *cmd)
 		return ;
 	}
 	*tok = (*tok)->next;
-	if (cmd->outfile)
+	if (cmd->infile)
 		free(cmd->infile);
 	cmd->infile = ft_strdup((*tok)->value);
 }
