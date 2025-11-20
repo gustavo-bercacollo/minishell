@@ -58,8 +58,10 @@ typedef struct t_shell
 /* Tokenizer */
 t_token *tokenize(char *comand);
 
+int	builtin_echo(char **argv);
+
 /* Parser */
-void    parser(t_shell *ms);
+t_command	*parse(t_token *tok);
 
 /* Exec */
 char	*get_path(char **envp, char *cmd);
@@ -68,11 +70,14 @@ void    executor(t_shell *ms);
 /* Utils Tokenizer*/
 void	skip_spaces(char **s);
 t_token	*new_token(char *value, t_toktype type);
-char	*ft_strndup(const char *s, size_t n);
+//char	*ft_strndup(const char *s, size_t n);
 t_token	*read_word(char **s);
 t_token	*read_quotes(char **s);
 t_token	*read_operator(char **s);
 
+/* Utils Tokenizer*/
+t_command	*new_command(void);
+void	add_arg(t_command *cmd, char *word);
 
 /* Utils */
 void    free_tokens(t_token *list);
