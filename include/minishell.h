@@ -70,7 +70,7 @@ void    executor(t_shell *ms);
 /* Utils Tokenizer*/
 void	skip_spaces(char **s);
 t_token	*new_token(char *value, t_toktype type);
-char	*ft_strndup(const char *s, size_t n);
+//char	*ft_strndup(const char *s, size_t n);
 t_token	*read_word(char **s);
 t_token	*read_quotes(char **s);
 t_token	*read_operator(char **s);

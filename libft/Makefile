@@ -1,6 +1,4 @@
 NAME = libft.a
-
-# Diretórios
 LIST_DIR = list
 MEM_DIR = memory
 STR_DIR = strings
@@ -38,6 +36,7 @@ SRCS = \
 	$(STR_DIR)/ft_strncmp.c \
 	$(STR_DIR)/ft_strnstr.c \
 	$(STR_DIR)/ft_strdup.c \
+	$(STR_DIR)/ft_strndup.c \
 	$(STR_DIR)/ft_substr.c \
 	$(STR_DIR)/ft_strjoin.c \
 	$(STR_DIR)/ft_strtrim.c \
@@ -70,7 +69,6 @@ BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 	$(CC) $(CFLAGS) -c $< -o $@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I.
-
 
 all: $(NAME)
 
