@@ -63,14 +63,16 @@ int	builtin_echo(char **argv);
 /* Parser */
 t_command	*parse(t_token *tok);
 
-/* Exec */
-char	*get_path(char **envp, char *cmd);
-void    executor(t_shell *ms);
+/* Execute */
+int	execute_single(t_shell *ms, t_command *cmd);
+
+/* Utils Execute */
+void	exec_child(t_shell *ms, t_command *cmd);
+int	exec_parent(t_shell *ms, pid_t pid);
 
 /* Utils Tokenizer*/
 void	skip_spaces(char **s);
 t_token	*new_token(char *value, t_toktype type);
-//char	*ft_strndup(const char *s, size_t n);
 t_token	*read_word(char **s);
 t_token	*read_quotes(char **s);
 t_token	*read_operator(char **s);
@@ -82,5 +84,6 @@ void	add_arg(t_command *cmd, char *word);
 /* Utils */
 void    free_tokens(t_token *list);
 char	*get_path_prompt(void);
+char	*get_path(char **envp, char *cmd);
 
 #endif
