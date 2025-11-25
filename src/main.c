@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/23 16:47:34 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/11/23 16:49:44 by gbercaco         ###   ########.fr       */
+/*   Created: 2025/11/25 18:45:06 by gbercaco          #+#    #+#             */
+/*   Updated: 2025/11/25 18:45:07 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,7 @@ int	main(int argc, char **argv, char **envp)
 		tokens = tokenize(line);
 		cmds = parse(tokens);
 		if (cmds)
-		{
-			ms.last_status = execute_single(&ms, cmds);
-			printf("Status do comando: %d\n", ms.last_status);
-		}
+			ms.last_status = execute_pipe(&ms, cmds);
 	}
 	return (0);
 }
