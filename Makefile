@@ -6,7 +6,7 @@
 #    By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/17 15:37:39 by klima-do          #+#    #+#              #
-#    Updated: 2025/11/20 16:11:59 by gbercaco         ###   ########.fr        #
+#    Updated: 2025/11/23 16:38:39 by gbercaco         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,9 @@ SRCS = src/main.c \
        src/token/utils_tokenizer.c \
        src/token/read_operators.c \
        src/parser/parse.c \
-       src/parser/utils_parse.c
+       src/parser/utils_parse.c \
+       src/execute/execute.c \
+       src/execute/utils_execute.c
 
 OBJS = $(SRCS:.c=.o)
 

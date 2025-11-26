@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:56:18 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/11/20 16:35:15 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/11/23 13:41:10 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,6 @@ t_token	*new_token(char *value, t_toktype type)
 	tok->next = NULL;
 	return (tok);
 }
-
-// char	*ft_strndup(const char *s, size_t n)
-// {
-// 	char	*dup;
-// 	size_t	i;
-
-// 	dup = malloc(n + 1);
-// 	if (!dup)
-// 		return (NULL);
-// 	i = 0;
-// 	while (i < n && s[i])
-// 	{
-// 		dup[i] = s[i];
-// 		i++;
-// 	}
-// 	dup[i] = '\0';
-// 	return (dup);
-// }
 
 t_token	*read_word(char **s)
 {
