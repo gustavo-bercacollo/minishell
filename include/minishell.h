@@ -74,7 +74,11 @@ int	exec_parent(t_shell *ms, pid_t pid);
 void	run_child_with_pipe(t_shell *ms, t_command *cmd, int fd_in, int fd[2]);
 void	handle_parent_after_fork(int *fd_in, int fd[2], t_command *cmd,
 		t_shell *ms, pid_t pid);
-		
+	
+/* Redirections */
+void	handle_outfile(t_command *cmd);
+void	handle_infile(t_command *cmd);
+
 /* Utils Tokenizer*/
 void	skip_spaces(char **s);
 t_token	*new_token(char *value, t_toktype type);
