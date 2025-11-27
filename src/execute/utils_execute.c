@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 16:35:19 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/11/25 18:43:21 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/11/27 20:29:51 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,12 @@ int	exec_parent(t_shell *ms, pid_t pid)
 
 void	run_child_with_pipe(t_shell *ms, t_command *cmd, int fd_in, int fd[2])
 {
-	if (fd_in != 0)
+	if (cmd->heredoc)
+	{
+		dup2(cmd->heredoc_fd, STDIN_FILENO);
+		close(cmd->heredoc_fd);
+	}
+	else if (fd_in != 0)
 	{
 		dup2(fd_in, STDIN_FILENO);
 		close(fd_in);
@@ -52,6 +57,10 @@ void	run_child_with_pipe(t_shell *ms, t_command *cmd, int fd_in, int fd[2])
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 	}
+	if (cmd->outfile)
+		handle_outfile(cmd);
+	if (cmd->infile)
+		handle_infile(cmd);
 	execute_single(ms, cmd);
 	exit(ms->last_status);
 }
