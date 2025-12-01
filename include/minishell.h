@@ -90,6 +90,10 @@ t_token	*read_operator(char **s);
 t_command	*new_command(void);
 void	add_arg(t_command *cmd, char *word);
 
+/* Expansions */
+void	expand(t_shell *ms, t_command *cmd_list);
+
+
 /* Utils */
 void    free_tokens(t_token *list);
 char	*get_path_prompt(void);

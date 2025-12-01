@@ -6,7 +6,7 @@
 #    By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/17 15:37:39 by klima-do          #+#    #+#              #
-#    Updated: 2025/11/27 20:20:01 by gbercaco         ###   ########.fr        #
+#    Updated: 2025/11/30 15:55:57 by gbercaco         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ SRCS = src/main.c \
        src/parser/utils_parse.c \
        src/execute/execute.c \
        src/execute/utils_execute.c \
-       src/execute/redirections.c
+       src/execute/redirections.c \
+       src/expansions/expansions.c
 
 OBJS = $(SRCS:.c=.o)
 
