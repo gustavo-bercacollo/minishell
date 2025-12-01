@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 14:46:12 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/11/30 20:19:37 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/01 17:01:45 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,52 @@ char	*process_arg(char *arg)
 	return (NULL);
 }
 
+char	*get_variable_value(t_shell *ms, char *var_name)
+{
+	char	*value;
+
+	if (ft_strcmp(var_name, "?") == 0)
+		return (ft_itoa(ms->last_status));
+	value = getenv(var_name);
+	if (!value)
+		return (ft_strdup(""));
+	return (ft_strdup(value));
+}
+
+char	*replace_var_in_arg(char *arg, char *var_name, char *value)
+{
+	int		var_len;
+	char	*before;
+	char	*after;
+	char	*tmp;
+	char	*final;
+	int		pos;
+
+	var_len = ft_strlen(var_name);
+	pos = 0;
+	while (arg[pos] && !(arg[pos] == '$' && ft_strncmp(&arg[pos + 1], var_name,
+				var_len) == 0))
+		pos++;
+	if (arg[pos] == '\0')
+		return (ft_strdup(arg));
+	before = ft_substr(arg, 0, pos);
+	after = ft_strdup(&arg[pos + 1 + var_len]);
+	tmp = ft_strjoin(before, value);
+	final = ft_strjoin(tmp, after);
+	free(before);
+	free(after);
+	free(tmp);
+	return (final);
+}
+
 void	expand(t_shell *ms, t_command *cmd_list)
 {
 	t_command	*cmd;
 	char		*var_name;
 	char		*value;
+	char		*new_arg;
 	int			i;
 
-	(void)ms;
 	cmd = cmd_list;
 	while (cmd)
 	{
@@ -72,11 +110,12 @@ void	expand(t_shell *ms, t_command *cmd_list)
 			var_name = process_arg(cmd->argv[i]);
 			if (var_name)
 			{
-				if (ft_strcmp(var_name, "?") == 0)
-					value = ft_itoa(ms->last_status);
-				else
-					value = getenv(var_name);
+				value = get_variable_value(ms, var_name);
+				new_arg = replace_var_in_arg(cmd->argv[i], var_name, value);
+				free(value);
 				free(var_name);
+				free(cmd->argv[i]);
+				cmd->argv[i] = new_arg;
 			}
 			i++;
 		}
