@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:56:18 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/11/23 13:41:10 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/01 22:49:10 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ t_token	*read_quotes(char **s)
 	char	*start;
 	int		len;
 	char	*word;
+	t_token	*tok;
 
 	quote = **s;
 	(*s)++;
@@ -66,6 +67,11 @@ t_token	*read_quotes(char **s)
 	if (**s == quote)
 		(*s)++;
 	word = ft_strndup(start, len);
-	return (new_token(word, TOK_WORD));
-}
+	tok = new_token(word, TOK_WORD);
 
+	if (quote == '\'')
+		tok->single_quoted = 1;
+	else
+		tok->single_quoted = 0;
+	return (tok);
+}

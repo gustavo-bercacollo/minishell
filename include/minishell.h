@@ -32,21 +32,23 @@ typedef enum e_toktype
 
 typedef struct s_token
 {
-    char            *value;
-    t_toktype       type;
-    struct s_token  *next;
-}   t_token;
+	char	*value;
+	t_toktype	type;
+	int	single_quoted; 
+	struct s_token	*next;
+}	t_token;
 
 typedef struct s_command
 {
-    char 	**argv;
-    char 	*infile;
-    char 	*outfile;
-    int  	append;
-    int  	heredoc;
-    int	heredoc_fd;
-    struct 	s_command *next;
-}   t_command;
+	char	**argv;
+	char	*infile;
+	char	*outfile;
+	int	append;
+	int	heredoc;
+	int	heredoc_fd;
+	int	*quoted;
+	struct	s_command *next;
+}	t_command;
 
 typedef struct t_shell
 {
@@ -58,7 +60,6 @@ typedef struct t_shell
 
 /* Tokenizer */
 t_token *tokenize(char *comand);
-
 int	builtin_echo(char **argv);
 
 /* Parser */
@@ -88,14 +89,14 @@ t_token	*read_operator(char **s);
 
 /* Utils Tokenizer*/
 t_command	*new_command(void);
-void	add_arg(t_command *cmd, char *word);
+void add_arg(t_command *cmd, t_token *tok);
 
 /* Expansions */
 void	expand(t_shell *ms, t_command *cmd_list);
 
 
 /* Utils */
-void    free_tokens(t_token *list);
+void	free_tokens(t_token *list);
 char	*get_path_prompt(void);
 char	*get_path(char **envp, char *cmd);
 

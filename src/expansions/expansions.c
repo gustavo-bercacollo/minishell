@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 14:46:12 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/01 17:01:45 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/01 22:33:43 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,11 @@ void	expand(t_shell *ms, t_command *cmd_list)
 		i = 0;
 		while (cmd->argv && cmd->argv[i])
 		{
+			if (cmd->quoted[i] == 1)
+			{
+				i++;
+				continue ;
+			}
 			var_name = process_arg(cmd->argv[i]);
 			if (var_name)
 			{

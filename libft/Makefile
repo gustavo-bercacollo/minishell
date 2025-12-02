@@ -76,7 +76,6 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	@echo "📦 Compilando arquivos obrigatórios..."
 	@ar rcs $(NAME) $(OBJS)
-	@echo "✅ Todos os arquivos foram compilados com sucesso!"
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -87,7 +86,6 @@ bonus: .bonus_build
 	@echo "📦 Compilando arquivos bônus e obrigatórios..."
 	@ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
 	@touch .bonus_build
-	@echo "✅ Todos os arquivos foram compilados com sucesso!"
 
 clean:
 	@rm -f $(OBJS)

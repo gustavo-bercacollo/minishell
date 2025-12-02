@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 17:50:25 by klima-do          #+#    #+#             */
-/*   Updated: 2025/11/26 20:13:15 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/01 22:33:17 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_command	*parse(t_token *tok)
 	while (tok)
 	{
 		if (tok->type == TOK_WORD)
-			add_arg(cmd, tok->value);
+			add_arg(cmd, tok);
 		else if (tok->type == TOK_REDIR_OUT || tok->type == TOK_REDIR_APPEND)
 			set_outfile(&tok, cmd);
 		else if (tok->type == TOK_HEREDOC)
