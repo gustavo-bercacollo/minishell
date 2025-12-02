@@ -68,7 +68,7 @@ t_command	*parse(t_token *tok);
 
 /* Execute */
 int	execute_single(t_shell *ms, t_command *cmd);
-int	execute_pipe(t_shell *ms, t_command *cmd);
+int	execute(t_shell *ms, t_command *cmd);
 
 /* Utils Execute */
 void	exec_child(t_shell *ms, t_command *cmd);

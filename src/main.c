@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 18:45:06 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/01 16:54:47 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/02 18:07:07 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char **argv, char **envp)
 		cmds = parse(tokens);
 		expand(&ms, cmds);
 		if (cmds)
-			ms.last_status = execute_pipe(&ms, cmds);
+			ms.last_status = execute(&ms, cmds);
 	}
 	return (0);
 }

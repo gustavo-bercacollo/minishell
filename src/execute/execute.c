@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 18:53:53 by klima-do          #+#    #+#             */
-/*   Updated: 2025/11/26 20:13:52 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/02 18:06:49 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	execute_single(t_shell *ms, t_command *cmd)
 	return (exec_parent(ms, pid));
 }
 
-int	execute_pipe(t_shell *ms, t_command *cmd)
+int	execute(t_shell *ms, t_command *cmd)
 {
 	int		fd[2];
 	pid_t	pid;
