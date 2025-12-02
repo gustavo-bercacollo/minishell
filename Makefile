@@ -6,7 +6,7 @@
 #    By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/17 15:37:39 by klima-do          #+#    #+#              #
-#    Updated: 2025/11/30 15:55:57 by gbercaco         ###   ########.fr        #
+#    Updated: 2025/12/02 15:47:43 by gbercaco         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,18 +20,19 @@ LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 SRCS = src/main.c \
-       src/builtins/builtin_echo.c \
-       src/utils/get_prompt_path.c \
-       src/utils/get_path.c \
-       src/token/tokenizer.c \
-       src/token/utils_tokenizer.c \
-       src/token/read_operators.c \
-       src/parser/parse.c \
-       src/parser/utils_parse.c \
-       src/execute/execute.c \
-       src/execute/utils_execute.c \
-       src/execute/redirections.c \
-       src/expansions/expansions.c
+	src/builtins/builtin_echo.c \
+	src/utils/get_prompt_path.c \
+	src/utils/get_path.c \
+	src/token/tokenizer.c \
+	src/token/utils_tokenizer.c \
+	src/token/read_operators.c \
+	src/parser/parse.c \
+	src/parser/utils_parse.c \
+	src/execute/execute.c \
+	src/execute/utils_execute.c \
+	src/execute/redirections.c \
+	src/expansions/expansions.c \
+	src/expansions/utils_expansions.c
 
 OBJS = $(SRCS:.c=.o)
 

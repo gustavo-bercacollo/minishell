@@ -47,6 +47,7 @@ typedef struct s_command
 	int	heredoc;
 	int	heredoc_fd;
 	int	*quoted;
+	int	argc;
 	struct	s_command *next;
 }	t_command;
 
@@ -94,6 +95,10 @@ void add_arg(t_command *cmd, t_token *tok);
 /* Expansions */
 void	expand(t_shell *ms, t_command *cmd_list);
 
+/* Utils Expansions */
+char	*process_arg(char *arg);
+char	*get_variable_value(t_shell *ms, char *var_name);
+char	*replace_var_in_arg(char *arg, char *var_name, char *value);
 
 /* Utils */
 void	free_tokens(t_token *list);

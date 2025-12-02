@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 17:38:23 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/02 15:06:54 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/02 15:13:35 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_command	*new_command(void)
 	cmd->outfile = NULL;
 	cmd->append = 0;
 	cmd->heredoc = 0;
+	cmd->argc = 0;
 	cmd->heredoc_fd = -1;
 	cmd->next = NULL;
 	return (cmd);
@@ -32,36 +33,32 @@ t_command	*new_command(void)
 
 void	add_arg(t_command *cmd, t_token *tok)
 {
-	int		count;
 	int		i;
 	char	**new_argv;
 	int		*new_quoted;
 
-	count = 0;
-	if (cmd->argv)
-		while (cmd->argv[count])
-			count++;
-	new_argv = malloc(sizeof(char *) * (count + 2));
+	new_argv = malloc(sizeof(char *) * (cmd->argc + 2));
 	if (!new_argv)
 		return ;
-	new_quoted = malloc(sizeof(int) * (count + 2));
+	new_quoted = malloc(sizeof(int) * (cmd->argc + 2));
 	if (!new_quoted)
 	{
 		free(new_argv);
 		return ;
 	}
 	i = -1;
-	while (++i < count)
+	while (++i < cmd->argc)
 	{
 		new_argv[i] = cmd->argv[i];
 		new_quoted[i] = cmd->quoted[i];
 	}
-	new_argv[count] = ft_strdup(tok->value);
-	new_quoted[count] = tok->single_quoted;
-	new_argv[count + 1] = NULL;
-	new_quoted[count + 1] = 0;
+	new_argv[cmd->argc] = ft_strdup(tok->value);
+	new_quoted[cmd->argc] = tok->single_quoted;
+	new_argv[cmd->argc + 1] = NULL;
+	new_quoted[cmd->argc + 1] = 0;
 	free(cmd->argv);
 	free(cmd->quoted);
 	cmd->argv = new_argv;
 	cmd->quoted = new_quoted;
+	cmd->argc++;
 }

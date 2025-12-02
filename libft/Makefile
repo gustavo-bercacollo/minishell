@@ -74,7 +74,6 @@ CFLAGS = -Wall -Wextra -Werror -I.
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@echo "📦 Compilando arquivos obrigatórios..."
 	@ar rcs $(NAME) $(OBJS)
 
 %.o: %.c
@@ -83,7 +82,6 @@ $(NAME): $(OBJS)
 bonus: .bonus_build
 
 .bonus_build: $(OBJS) $(BONUS_OBJS)
-	@echo "📦 Compilando arquivos bônus e obrigatórios..."
 	@ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
 	@touch .bonus_build
 
@@ -94,7 +92,6 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "❗Todos os arquivos foram removidos com sucesso!"
 
 re: fclean all
 
