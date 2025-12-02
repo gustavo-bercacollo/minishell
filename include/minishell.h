@@ -67,14 +67,12 @@ int	builtin_echo(char **argv);
 t_command	*parse(t_token *tok);
 
 /* Execute */
-int	execute_single(t_shell *ms, t_command *cmd);
 int	execute(t_shell *ms, t_command *cmd);
 
 /* Utils Execute */
 void	exec_child(t_shell *ms, t_command *cmd);
-int	exec_parent(t_shell *ms, pid_t pid);
-void	run_child_with_pipe(t_shell *ms, t_command *cmd, int fd_in, int fd[2]);
-void	handle_parent_after_fork(int *fd_in, int fd[2], t_command *cmd,
+void	run_child(t_shell *ms, t_command *cmd, int fd_in, int fd[2]);
+void	handle_parent(int *fd_in, int fd[2], t_command *cmd,
 		t_shell *ms, pid_t pid);
 	
 /* Redirections */

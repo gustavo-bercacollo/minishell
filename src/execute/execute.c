@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 18:53:53 by klima-do          #+#    #+#             */
-/*   Updated: 2025/12/02 18:12:43 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/02 19:44:35 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	execute(t_shell *ms, t_command *cmd)
 		if (pid < 0)
 			return (perror("fork"), 1);
 		else if (pid == 0)
-			run_child_with_pipe(ms, cmd, fd_in, fd);
+			run_child(ms, cmd, fd_in, fd);
 		else
-			handle_parent_after_fork(&fd_in, fd, cmd, ms, pid);
+			handle_parent(&fd_in, fd, cmd, ms, pid);
 		cmd = cmd->next;
 	}
 	return (ms->last_status);
