@@ -6,11 +6,25 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 16:35:19 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/11/27 20:29:51 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/02 18:13:18 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	execute_single(t_shell *ms, t_command *cmd)
+{
+	pid_t	pid;
+
+	if (!cmd->argv || !cmd->argv[0])
+		return (0);
+	pid = fork();
+	if (pid < 0)
+		return (perror("fork"), 1);
+	if (pid == 0)
+		exec_child(ms, cmd);
+	return (exec_parent(ms, pid));
+}
 
 void	exec_child(t_shell *ms, t_command *cmd)
 {
