@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 16:17:53 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/02 15:44:59 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/02 15:56:34 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,17 @@ char	*replace_var_in_arg(char *arg, char *var_name, char *value)
 	free(after);
 	free(tmp);
 	return (final);
+}
+
+char	*expand_variable_in_arg(t_shell *ms, char *arg, char *var_name)
+{
+	char	*value;
+	char	*new_arg;
+
+	value = get_variable_value(ms, var_name);
+	new_arg = replace_var_in_arg(arg, var_name, value);
+	free(value);
+	free(var_name);
+	free(arg);
+	return (new_arg);
 }

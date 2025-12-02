@@ -99,6 +99,7 @@ void	expand(t_shell *ms, t_command *cmd_list);
 char	*process_arg(char *arg);
 char	*get_variable_value(t_shell *ms, char *var_name);
 char	*replace_var_in_arg(char *arg, char *var_name, char *value);
+char	*expand_variable_in_arg(t_shell *ms, char *arg, char *var_name);
 
 /* Utils */
 void	free_tokens(t_token *list);
