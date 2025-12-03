@@ -66,6 +66,11 @@ int	builtin_echo(char **argv);
 /* Parser */
 t_command	*parse(t_token *tok);
 
+/* Setters */
+void	set_outfile(t_token **tok, t_command *cmd);
+void	set_infile(t_token **tok, t_command *cmd);
+void	set_heredoc(t_token **tok, t_command *cmd);
+
 /* Execute */
 int	execute(t_shell *ms, t_command *cmd);
 
@@ -78,6 +83,9 @@ void	handle_pipe_parent(int *fd_in, int fd[2], t_command *cmd);
 /* Redirections */
 void	handle_outfile(t_command *cmd);
 void	handle_infile(t_command *cmd);
+void	handle_heredoc(t_command *cmd);
+void	handle_pipe_input(int fd_in);
+void	handle_pipe_output(int fd[2]);
 
 /* Utils Tokenizer*/
 void	skip_spaces(char **s);

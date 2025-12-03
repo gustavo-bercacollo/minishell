@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 16:35:19 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/03 15:35:41 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/03 17:22:41 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,11 @@ void	exec_child(t_shell *ms, t_command *cmd)
 void	run_child(t_shell *ms, t_command *cmd, int fd_in, int fd[2])
 {
 	if (cmd->heredoc)
-	{
-		dup2(cmd->heredoc_fd, STDIN_FILENO);
-		close(cmd->heredoc_fd);
-	}
+		handle_heredoc(cmd);
 	else if (fd_in != 0)
-	{
-		dup2(fd_in, STDIN_FILENO);
-		close(fd_in);
-	}
+		handle_pipe_input(fd_in);
 	if (cmd->next)
-	{
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
-	}
+		handle_pipe_output(fd);
 	if (cmd->outfile)
 		handle_outfile(cmd);
 	if (cmd->infile)

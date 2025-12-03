@@ -6,7 +6,7 @@
 #    By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/17 15:37:39 by klima-do          #+#    #+#              #
-#    Updated: 2025/12/02 18:59:45 by gbercaco         ###   ########.fr        #
+#    Updated: 2025/12/03 18:46:37 by gbercaco         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,8 @@ SRCS = src/main.c \
 	src/token/utils_tokenizer.c \
 	src/token/read_operators.c \
 	src/parser/parse.c \
+	src/parser/setters.c \
+	src/parser/add_argments.c \
 	src/parser/utils_parse.c \
 	src/execute/execute.c \
 	src/execute/utils_execute.c \
