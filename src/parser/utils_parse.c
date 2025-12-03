@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 17:38:23 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/02 17:38:35 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/03 15:40:00 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ static void	copy_old_args(t_command *cmd, char **new_argv, int *new_quoted)
 	}
 }
 
-static void	add_new_arg_and_set_null(t_command *cmd, t_token *tok, char **new_argv,
-		int *new_quoted)
+static void	add_new_arg_and_set_null(t_command *cmd, t_token *tok,
+		char **new_argv, int *new_quoted)
 {
 	new_argv[cmd->argc] = ft_strdup(tok->value);
 	new_quoted[cmd->argc] = tok->single_quoted;

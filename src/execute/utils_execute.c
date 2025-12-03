@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 16:35:19 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/02 19:44:43 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/03 15:35:41 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,17 @@ void	run_child(t_shell *ms, t_command *cmd, int fd_in, int fd[2])
 	exec_child(ms, cmd);
 }
 
-void	handle_parent(int *fd_in, int fd[2], t_command *cmd,
-		t_shell *ms, pid_t pid)
+void	wait_child_and_update_status(pid_t pid, t_shell *ms)
 {
 	int	status;
 
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		ms->last_status = WEXITSTATUS(status);
+}
+
+void	handle_pipe_parent(int *fd_in, int fd[2], t_command *cmd)
+{
 	if (*fd_in != 0)
 		close(*fd_in);
 	if (cmd->next)

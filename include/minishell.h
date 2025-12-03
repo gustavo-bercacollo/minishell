@@ -72,8 +72,8 @@ int	execute(t_shell *ms, t_command *cmd);
 /* Utils Execute */
 void	exec_child(t_shell *ms, t_command *cmd);
 void	run_child(t_shell *ms, t_command *cmd, int fd_in, int fd[2]);
-void	handle_parent(int *fd_in, int fd[2], t_command *cmd,
-		t_shell *ms, pid_t pid);
+void	wait_child_and_update_status(pid_t pid, t_shell *ms);
+void	handle_pipe_parent(int *fd_in, int fd[2], t_command *cmd);
 	
 /* Redirections */
 void	handle_outfile(t_command *cmd);

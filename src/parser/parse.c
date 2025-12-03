@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 17:50:25 by klima-do          #+#    #+#             */
-/*   Updated: 2025/12/01 22:33:17 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/03 15:44:23 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ static void	set_outfile(t_token **tok, t_command *cmd)
 	else
 		cmd->append = 1;
 	if (!(*tok)->next)
-		return (ft_putendl_fd("minishell: syntax error near unexpected token `newline`",
-				2));
+		return (ft_putendl_fd("minishell: syntax error ", 2));
 	*tok = (*tok)->next;
 	if (cmd->outfile)
 		free(cmd->outfile);
@@ -32,8 +31,7 @@ static void	set_infile(t_token **tok, t_command *cmd)
 	if ((*tok)->type == TOK_HEREDOC)
 		cmd->heredoc = 1;
 	if (!(*tok)->next)
-		return (ft_putendl_fd("minishell: syntax error near unexpected token `newline`",
-				2));
+		return (ft_putendl_fd("minishell: syntax error", 2));
 	*tok = (*tok)->next;
 	if (cmd->infile)
 		free(cmd->infile);

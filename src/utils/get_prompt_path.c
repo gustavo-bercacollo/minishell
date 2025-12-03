@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 16:01:42 by klima-do          #+#    #+#             */
-/*   Updated: 2025/12/02 18:00:02 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/03 15:42:40 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ char	*get_path_prompt(void)
 
 	cwd = getcwd(NULL, 0);
 	start = ft_strnstr(cwd, "Minihell", ft_strlen(cwd));
-	if(start)
-		return(ft_strdup(start));
+	if (start)
+		return (ft_strdup(start));
 	start = ft_strrchr(cwd, '/');
-	if(start)
-		return(ft_strdup(start + 1));
+	if (start)
+		return (ft_strdup(start + 1));
 	return (cwd);
 }
