@@ -61,7 +61,13 @@ typedef struct t_shell
 
 /* Tokenizer */
 t_token *tokenize(char *comand);
+
+/* Builtins */
 int	builtin_echo(char **argv);
+
+/* Utils Builtins */
+int	is_builtin(const char *cmd);
+int	execute_builtin(t_shell *ms, t_command *cmd);
 
 /* Parser */
 t_command	*parse(t_token *tok);
