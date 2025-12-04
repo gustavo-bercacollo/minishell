@@ -6,6 +6,7 @@ NUM_DIR = number
 PRINT_DIR = print
 ASCII_DIR = ascii
 STACK_DIR = stack
+
 BONUS_SRCS = \
 	$(LIST_DIR)/ft_lstadd_back_bonus.c \
 	$(LIST_DIR)/ft_lstadd_front_bonus.c \
@@ -20,7 +21,7 @@ BONUS_SRCS = \
 SRCS = \
 	$(NUM_DIR)/ft_atoi.c \
 	$(NUM_DIR)/ft_itoa.c \
-	$(NUM_DIR)/ft_atol.c\
+	$(NUM_DIR)/ft_atol.c \
 	$(MEM_DIR)/ft_memset.c \
 	$(MEM_DIR)/ft_bzero.c \
 	$(MEM_DIR)/ft_memcpy.c \
@@ -46,7 +47,7 @@ SRCS = \
 	$(STR_DIR)/ft_striteri.c \
 	$(STR_DIR)/ft_toupper.c \
 	$(STR_DIR)/ft_tolower.c \
-	$(STR_DIR)/get_next_line.c\
+	$(STR_DIR)/get_next_line.c \
 	$(PRINT_DIR)/ft_putchar_fd.c \
 	$(PRINT_DIR)/ft_putstr_fd.c \
 	$(PRINT_DIR)/ft_putendl_fd.c \
@@ -55,29 +56,27 @@ SRCS = \
 	$(ASCII_DIR)/ft_isdigit.c \
 	$(ASCII_DIR)/ft_isalnum.c \
 	$(ASCII_DIR)/ft_isascii.c \
-	$(ASCII_DIR)/ft_isprint.c\
-	$(STACK_DIR)/pop.c\
-	$(STACK_DIR)/push.c\
-	$(STACK_DIR)/init_stack.c\
-	$(STACK_DIR)/stack_clear.c\
-	$(STACK_DIR)/find_last.c\
+	$(ASCII_DIR)/ft_isprint.c \
+	$(STACK_DIR)/pop.c \
+	$(STACK_DIR)/push.c \
+	$(STACK_DIR)/init_stack.c \
+	$(STACK_DIR)/stack_clear.c \
+	$(STACK_DIR)/find_last.c \
 	memory_management/ft_free_split.c
 
 OBJS = $(SRCS:.c=.o)
 BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I.
+
+%.o: %.c
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	@ar rcs $(NAME) $(OBJS)
-
-%.o: %.c
-	@$(CC) $(CFLAGS) -c $< -o $@
 
 bonus: .bonus_build
 
