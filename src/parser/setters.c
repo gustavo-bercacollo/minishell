@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 18:30:50 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/03 18:33:05 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/05 19:24:58 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	set_heredoc(t_token **tok, t_command *cmd)
 	pipe(fd);
 	while (1)
 	{
-		line = readline("heredoc> ");
+		line = readline("> ");
 		if (!line || ft_strcmp(line, delim) == 0)
 			break ;
 		if (line && *line != '\0')
