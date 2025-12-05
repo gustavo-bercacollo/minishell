@@ -56,6 +56,13 @@ typedef struct t_shell
 	t_token	*tokens;
 }	t_shell;
 
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
 /* Tokenizer */
 t_token *tokenize(char *comand);
 
