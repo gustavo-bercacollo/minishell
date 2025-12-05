@@ -11,75 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-void	env_add_back(t_env **env_lst, t_env *new);
-
-int	ft_strlen(const char *s)
-{
-	int	count;
-
-	count = 0;
-	while (*s++)
-	{
-		count++;
-	}
-	return (count);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	while (*s != (char) c)
-	{
-		if (*s == '\0')
-			return (NULL);
-		s++;
-	}
-	return ((char *)s);
-}
-char	*ft_strdup(const char *s)
-{
-	char	*str;
-	char	*start;
-	size_t	size;
-
-	size = ft_strlen(s);
-	str = malloc(size + 1);
-	if (!str)
-		return (NULL);
-	start = str;
-	while (*s)
-		*str++ = *s++;
-	*str = '\0';
-	return (start);
-}
-
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*ptr;
-	size_t	string_size;
-	size_t	index;
-
-	string_size = ft_strlen(s);
-	index = 0;
-	if (!s)
-		return (NULL);
-	if (start > string_size)
-		start = string_size;
-	if (len > string_size - start)
-		len = string_size - start;
-	ptr = malloc(len + 1);
-	if (!ptr)
-		return (NULL);
-	while (len && s[start])
-	{
-		ptr[index] = s[start];
-		index++;
-		start++;
-		len--;
-	}
-	ptr[index] = '\0';
-	return (ptr);
-}
 
 void	add_env_node(t_env **env_lst, char *env_line)
 {
@@ -97,7 +28,6 @@ void	add_env_node(t_env **env_lst, char *env_line)
 	env_node->next = NULL;
 	env_add_back(env_lst, env_node);
 }
-
 
 void	env_add_back(t_env **env_lst, t_env *new)
 {
@@ -128,19 +58,4 @@ t_env	*get_env(char **env)
 		i++;
 	}
 	return (node);
-}
-
-int main(int argc, char **argv, char **envp)
-{
-    t_env *head;
-    t_env *tmp;
-
-    head = get_env(envp);
-
-    tmp = head;
-    while (tmp)
-    {
-        printf("%s=%s\n", tmp->key, tmp->value);
-        tmp = tmp->next;
-    }
 }
