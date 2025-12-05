@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 18:45:06 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/02 18:07:07 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/04 19:20:38 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	ms.envp = envp;
 	ms.last_status = 0;
+
+	init_signals();
 	while (1)
 	{
 		line = readline("minishell> ");

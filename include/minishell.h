@@ -113,8 +113,12 @@ char	*get_variable_value(t_shell *ms, char *var_name);
 char	*replace_var_in_arg(char *arg, char *var_name, char *value);
 char	*expand_variable_in_arg(t_shell *ms, char *arg, char *var_name);
 
+/* Signals */
+void	sigint_handler(int sig);
+void	init_signals(void);
+void	set_default_signals_for_child(void);
+
 /* Utils */
-void	free_tokens(t_token *list);
 char	*get_path_prompt(void);
 char	*get_path(char **envp, char *cmd);
 
