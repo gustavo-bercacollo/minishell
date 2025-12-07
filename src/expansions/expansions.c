@@ -1,42 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   expansions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/25 18:45:06 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/04 19:20:38 by gbercaco         ###   ########.fr       */
+/*   Created: 2025/11/30 14:46:12 by gbercaco          #+#    #+#             */
+/*   Updated: 2025/12/02 16:05:57 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void	expand(t_shell *ms, t_command *cmd_list)
 {
-	t_shell		ms;
-	char		*line;
-	t_token		*tokens;
-	t_command	*cmds;
+	t_command	*cmd;
+	char		*var_name;
+	int			i;
 
-	(void)argc;
-	(void)argv;
-	ms.envp = envp;
-	ms.last_status = 0;
-
-	init_signals();
-	while (1)
+	cmd = cmd_list;
+	while (cmd)
 	{
-		line = readline("minishell> ");
-		if (!line)
-			break ;
-		if (*line)
-			add_history(line);
-		tokens = tokenize(line);
-		cmds = parse(tokens);
-		expand(&ms, cmds);
-		if (cmds)
-			ms.last_status = execute(&ms, cmds);
+		i = 0;
+		while (cmd->argv && cmd->argv[i])
+		{
+			if (cmd->quoted[i] != 1)
+			{
+				var_name = process_arg(cmd->argv[i]);
+				if (var_name)
+					cmd->argv[i] = expand_variable_in_arg(ms, cmd->argv[i],
+							var_name);
+			}
+			i++;
+		}
+		cmd = cmd->next;
 	}
-	return (0);
 }

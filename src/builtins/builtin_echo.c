@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 14:57:49 by klima-do          #+#    #+#             */
-/*   Updated: 2025/11/19 15:32:18 by klima-do         ###   ########.fr       */
+/*   Updated: 2025/12/03 15:41:54 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	builtin_echo(char **argv)
 
 	i = 1;
 	new_l = 1;
-	if(argv[i] && !ft_strncmp(argv[i], "-n", 2))
+	if (argv[i] && !ft_strncmp(argv[i], "-n", 2))
 	{
 		new_l = 0;
 		while (argv[i] && !ft_strncmp(argv[i], "-n", 2))

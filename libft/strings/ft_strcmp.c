@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_prompt_path.c                                  :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/17 16:01:42 by klima-do          #+#    #+#             */
-/*   Updated: 2025/12/03 15:42:40 by gbercaco         ###   ########.fr       */
+/*   Created: 2025/11/26 17:49:50 by gbercaco          #+#    #+#             */
+/*   Updated: 2025/11/26 17:50:04 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../libft.h"
 
-char	*get_path_prompt(void)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	char	*cwd;
-	char	*start;
+	int	i;
 
-	cwd = getcwd(NULL, 0);
-	start = ft_strnstr(cwd, "Minihell", ft_strlen(cwd));
-	if (start)
-		return (ft_strdup(start));
-	start = ft_strrchr(cwd, '/');
-	if (start)
-		return (ft_strdup(start + 1));
-	return (cwd);
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

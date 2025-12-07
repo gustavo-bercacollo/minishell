@@ -6,19 +6,19 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 19:26:28 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/11/18 19:27:42 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/03 15:42:30 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_token *read_pipe(char **s)
+static t_token	*read_pipe(char **s)
 {
 	(*s)++;
 	return (new_token(ft_strdup("|"), TOK_PIPE));
 }
 
-static t_token *read_greater(char **s)
+static t_token	*read_greater(char **s)
 {
 	(*s)++;
 	if (**s == '>')
@@ -29,7 +29,7 @@ static t_token *read_greater(char **s)
 	return (new_token(ft_strdup(">"), TOK_REDIR_OUT));
 }
 
-static t_token *read_less(char **s)
+static t_token	*read_less(char **s)
 {
 	(*s)++;
 	if (**s == '<')
@@ -50,4 +50,3 @@ t_token	*read_operator(char **s)
 		return (read_less(s));
 	return (NULL);
 }
-

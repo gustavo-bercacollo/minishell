@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_prompt_path.c                                  :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/17 16:01:42 by klima-do          #+#    #+#             */
-/*   Updated: 2025/12/03 15:42:40 by gbercaco         ###   ########.fr       */
+/*   Created: 2025/12/04 19:15:45 by gbercaco          #+#    #+#             */
+/*   Updated: 2025/12/05 16:37:29 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_path_prompt(void)
+void	sigint_handler(int sig)
 {
-	char	*cwd;
-	char	*start;
+	(void)sig;
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
 
-	cwd = getcwd(NULL, 0);
-	start = ft_strnstr(cwd, "Minihell", ft_strlen(cwd));
-	if (start)
-		return (ft_strdup(start));
-	start = ft_strrchr(cwd, '/');
-	if (start)
-		return (ft_strdup(start + 1));
-	return (cwd);
+void	init_signals(void)
+{
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
+}
+void	set_default_signals_for_child(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }

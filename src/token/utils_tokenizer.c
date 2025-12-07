@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:56:18 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/11/20 16:35:15 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/03 15:42:37 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,6 @@ t_token	*new_token(char *value, t_toktype type)
 	tok->next = NULL;
 	return (tok);
 }
-
-// char	*ft_strndup(const char *s, size_t n)
-// {
-// 	char	*dup;
-// 	size_t	i;
-
-// 	dup = malloc(n + 1);
-// 	if (!dup)
-// 		return (NULL);
-// 	i = 0;
-// 	while (i < n && s[i])
-// 	{
-// 		dup[i] = s[i];
-// 		i++;
-// 	}
-// 	dup[i] = '\0';
-// 	return (dup);
-// }
 
 t_token	*read_word(char **s)
 {
@@ -73,6 +55,7 @@ t_token	*read_quotes(char **s)
 	char	*start;
 	int		len;
 	char	*word;
+	t_token	*tok;
 
 	quote = **s;
 	(*s)++;
@@ -84,6 +67,10 @@ t_token	*read_quotes(char **s)
 	if (**s == quote)
 		(*s)++;
 	word = ft_strndup(start, len);
-	return (new_token(word, TOK_WORD));
+	tok = new_token(word, TOK_WORD);
+	if (quote == '\'')
+		tok->single_quoted = 1;
+	else
+		tok->single_quoted = 0;
+	return (tok);
 }
-
