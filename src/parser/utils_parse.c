@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 17:38:23 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/11/26 14:55:39 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/03 18:45:04 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,33 +20,14 @@ t_command	*new_command(void)
 	if (!cmd)
 		return (NULL);
 	cmd->argv = NULL;
+	cmd->quoted = NULL;
 	cmd->infile = NULL;
 	cmd->outfile = NULL;
 	cmd->append = 0;
 	cmd->heredoc = 0;
+	cmd->argc = 0;
 	cmd->heredoc_fd = -1;
 	cmd->next = NULL;
 	return (cmd);
 }
 
-void	add_arg(t_command *cmd, char *word)
-{
-	int		count;
-	int		i;
-	char	**new_argv;
-
-	count = 0;
-	if (cmd->argv)
-		while (cmd->argv[count])
-			count++;
-	new_argv = malloc(sizeof(char *) * (count + 2));
-	if (!new_argv)
-		return ;
-	i = -1;
-	while (++i < count)
-		new_argv[i] = cmd->argv[i];
-	new_argv[count] = ft_strdup(word);
-	new_argv[count + 1] = NULL;
-	free(cmd->argv);
-	cmd->argv = new_argv;
-}
