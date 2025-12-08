@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 19:15:45 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/05 16:37:29 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/07 21:01:40 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int g_interrupted = 0;
 
 void	sigint_handler(int sig)
 {
