@@ -61,6 +61,15 @@ typedef struct t_shell
 	t_token	*tokens;
 }	t_shell;
 
+typedef struct s_heredoc
+{
+	char        *line;
+	int         fd[2];
+	int         saved_stdin;
+	char        *delim;
+	t_command   *cmd;
+}	t_heredoc;
+
 typedef struct s_env
 {
 	char			*key;
