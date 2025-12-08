@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/04 19:15:45 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/07 21:01:40 by klima-do         ###   ########.fr       */
+/*   Created: 2025/11/19 16:06:35 by klima-do          #+#    #+#             */
+/*   Updated: 2025/11/20 20:02:23 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
-int g_interrupted = 0;
-
-void	sigint_handler(int sig)
+int	biultin_envp(char **envp)
 {
-	(void)sig;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		printf("%s\nexport", envp[i]);
+		i++;
+	}
+	return (0);
 }
 
-void	init_signals(void)
+int main(int argc, char **argv, char **envp)
 {
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
-}
-void	set_default_signals_for_child(void)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	biultin_envp(envp);
 }

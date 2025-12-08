@@ -6,7 +6,7 @@
 #    By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/17 15:37:39 by klima-do          #+#    #+#              #
-#    Updated: 2025/12/04 19:21:26 by gbercaco         ###   ########.fr        #
+#    Updated: 2025/12/06 22:23:43 by gbercaco         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,8 @@ SRCS = src/main.c \
 	src/redirections/redirections.c \
 	src/expansions/expansions.c \
 	src/expansions/utils_expansions.c \
-	src/signals/signals.c
+	src/signals/signals.c \
+	src/builtins/env/env.c
 
 OBJS = $(SRCS:.c=.o)
 

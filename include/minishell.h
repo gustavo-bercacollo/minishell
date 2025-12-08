@@ -20,6 +20,8 @@
 #include <readline/history.h>
 #include "../libft/libft.h"
 
+extern int g_interrupted;
+
 typedef enum e_toktype
 {
 	TOK_WORD,
@@ -34,7 +36,7 @@ typedef struct s_token
 {
 	char	*value;
 	t_toktype	type;
-	int	single_quoted; 
+	int	single_quoted;
 	struct s_token	*next;
 }	t_token;
 
@@ -58,6 +60,15 @@ typedef struct t_shell
 	int		last_status;
 	t_token	*tokens;
 }	t_shell;
+
+typedef struct s_heredoc
+{
+	char        *line;
+	int         fd[2];
+	int         saved_stdin;
+	char        *delim;
+	t_command   *cmd;
+}	t_heredoc;
 
 typedef struct s_env
 {
@@ -92,7 +103,7 @@ void	exec_child(t_shell *ms, t_command *cmd);
 void	run_child(t_shell *ms, t_command *cmd, int fd_in, int fd[2]);
 void	wait_child_and_update_status(pid_t pid, t_shell *ms);
 void	handle_pipe_parent(int *fd_in, int fd[2], t_command *cmd);
-	
+
 /* Redirections */
 void	handle_outfile(t_command *cmd);
 void	handle_infile(t_command *cmd);
