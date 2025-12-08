@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 18:30:50 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/07 21:26:49 by klima-do         ###   ########.fr       */
+/*   Updated: 2025/12/07 22:14:40 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,48 +45,61 @@ void	sigint_heredoc(int sig)
 	close(STDIN_FILENO);
 }
 
+void	restoring_stdin(t_command *cmd, t_heredoc *doc)
+{
+	if (cmd->heredoc == -1)
+	{
+		close(doc->fd[0]);
+		close(doc->fd[1]);
+		dup2(doc->saved_stdin, STDIN_FILENO);
+		close(doc->saved_stdin);
+		init_signals();
+		return ;
+	}
+}
+
+void	loop_heredoc(t_heredoc *doc)
+{
+	while (1)
+	{
+		doc->line = readline("> ");
+		if (!doc->line && g_interrupted)
+		{
+			g_interrupted = 0;
+			doc->cmd->heredoc = -1;
+			return ;
+		}
+		if (!doc->line)
+			return ;
+		if (ft_strcmp(doc->line, doc->delim) == 0)
+		{
+			free(doc->line);
+			return ;
+		}
+		write(doc->fd[1], doc->line, ft_strlen(doc->line));
+		write(doc->fd[1], "\n", 1);
+		free(doc->line);
+	}
+}
+
 void	set_heredoc(t_token **tok, t_command *cmd)
 {
-	int		fd[2];
-	char	*line;
-	char	*delim;
-	int		saved_stdin;
+	t_heredoc	doc;
 
 	if (!(*tok)->next)
 		return (ft_putendl_fd("minishell: syntax error near `newline`", 2));
 	(*tok) = (*tok)->next;
-	delim = (*tok)->value;
-	pipe(fd);
-	saved_stdin = dup(STDIN_FILENO);
+	doc.delim = (*tok)->value;
+	doc.cmd = cmd;
+	pipe(doc.fd);
+	doc.saved_stdin = dup(STDIN_FILENO);
 	signal(SIGINT, sigint_heredoc);
-
-	while (1)
-	{
-		line = readline("> ");
-		if (!line && g_interrupted)
-		{
-			close(fd[1]);
-			close(fd[0]);
-			dup2(saved_stdin, STDIN_FILENO);
-			close(saved_stdin);
-
-			g_interrupted = 0;
-			init_signals();
-			cmd->heredoc = -1;
-			return ;
-		}
-		if (!line || ft_strcmp(line, delim) == 0)
-			break ;
-		write(fd[1], line, ft_strlen(line));
-		write(fd[1], "\n", 1);
-		free(line);
-	}
-	free(line);
-	close(fd[1]);
-	dup2(saved_stdin, STDIN_FILENO);
-	close(saved_stdin);
+	loop_heredoc(&doc);
+	restoring_stdin(cmd, &doc);
+	close(doc.fd[1]);
+	dup2(doc.saved_stdin, STDIN_FILENO);
+	close(doc.saved_stdin);
 	init_signals();
-	cmd->heredoc_fd = fd[0];
+	cmd->heredoc_fd = doc.fd[0];
 	cmd->heredoc = 1;
 }
-
