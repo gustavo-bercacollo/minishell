@@ -6,7 +6,7 @@
 #    By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/17 15:37:39 by klima-do          #+#    #+#              #
-#    Updated: 2025/12/09 18:49:16 by gbercaco         ###   ########.fr        #
+#    Updated: 2025/12/09 20:25:36 by gbercaco         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,6 +65,6 @@ fclean: clean
 re: fclean all
 
 valgrind: $(NAME)
-	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes --log-file=valgrind.log --suppressions=readline.supp ./$(NAME)
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes --log-file=valgrind.log --trace-children=yes -s --suppressions=readline.supp ./$(NAME)
 
 .PHONY: all clean fclean re
