@@ -1,0 +1,17 @@
+# Compiled files
+*.o
+*.out
+a.out
+
+# Executable
+minishell
+
+# Logs
+*.log
+valgrind.log
+
+# Readline
+readline.supp
+
+# VS Code
+.vscode/

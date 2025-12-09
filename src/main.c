@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 18:45:06 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/08 21:28:17 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/09 17:56:37 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	ms.envp = envp;
 	ms.last_status = 0;
-
 	init_signals();
 	while (1)
 	{
@@ -37,8 +36,10 @@ int	main(int argc, char **argv, char **envp)
 		expand(&ms, cmds);
 		if (cmds)
 			ms.last_status = execute(&ms, cmds);
+		free_tokens(&tokens);
+		free_parse(&cmds);
+		free(line);
 	}
-	free_tokens(&tokens);
-	free_parse(&cmds);
+	clear_history();
 	return (0);
 }
