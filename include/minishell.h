@@ -63,11 +63,11 @@ typedef struct t_shell
 
 typedef struct s_heredoc
 {
-	char        *line;
-	int         fd[2];
-	int         saved_stdin;
-	char        *delim;
-	t_command   *cmd;
+	char	*line;
+	int	fd[2];
+	int	saved_stdin;
+	char	*delim;
+	t_command	*cmd;
 }	t_heredoc;
 
 typedef struct s_env
@@ -135,6 +135,10 @@ char	*expand_variable_in_arg(t_shell *ms, char *arg, char *var_name);
 void	sigint_handler(int sig);
 void	init_signals(void);
 void	set_default_signals_for_child(void);
+
+/* Free */
+void	free_tokens(t_token **tokens);
+void	free_parse(t_command **cmd);
 
 /* Utils */
 char	*get_path_prompt(void);
