@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 16:17:53 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/02 15:56:34 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/10 17:39:12 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,27 +70,24 @@ char	*get_variable_value(t_shell *ms, char *var_name)
 char	*replace_var_in_arg(char *arg, char *var_name, char *value)
 {
 	int		var_len;
-	char	*before;
-	char	*after;
-	char	*tmp;
-	char	*final;
 	int		pos;
+	char	*final;
+	char	*temp;
 
 	var_len = ft_strlen(var_name);
 	pos = 0;
 	while (arg[pos] && !(arg[pos] == '$' && ft_strncmp(&arg[pos + 1], var_name,
 				var_len) == 0))
 		pos++;
-	if (arg[pos] == '\0')
+	if (!arg[pos])
 		return (ft_strdup(arg));
-	before = ft_substr(arg, 0, pos);
-	after = ft_strdup(&arg[pos + 1 + var_len]);
-	tmp = ft_strjoin(before, value);
-	final = ft_strjoin(tmp, after);
-	free(before);
-	free(after);
-	free(tmp);
-	return (final);
+	final = ft_substr(arg, 0, pos);
+	temp = ft_strjoin(final, value);
+	free(final);
+	final = temp;
+	temp = ft_strjoin(final, &arg[pos + 1 + var_len]);
+	free(final);
+	return (temp);
 }
 
 char	*expand_variable_in_arg(t_shell *ms, char *arg, char *var_name)

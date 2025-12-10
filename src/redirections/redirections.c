@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 20:04:11 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/03 17:21:25 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/10 17:56:13 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	handle_pipe_input(int fd_in)
 
 void	handle_pipe_output(int fd[2])
 {
-	close(fd[0]);
 	dup2(fd[1], STDOUT_FILENO);
+	close(fd[0]);
 	close(fd[1]);
 }
