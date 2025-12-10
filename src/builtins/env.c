@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 18:53:53 by klima-do          #+#    #+#             */
-/*   Updated: 2025/12/06 22:30:50 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/10 17:04:50 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	add_env_node(t_env **env_lst, char *env_line)
 		return ;
 	env_node = malloc(sizeof(t_env));
 	if (!env_node)
-		return ; 
+		return ;
 	env_node->key = ft_substr(env_line, 0, postion - env_line);
 	env_node->value = ft_strdup(postion + 1);
 	env_node->next = NULL;
@@ -33,7 +33,7 @@ void	env_add_back(t_env **env_lst, t_env *new)
 {
 	t_env	*last;
 
-	if(!env_lst || !new)
+	if (!env_lst || !new)
 		return ;
 	if (*env_lst == NULL)
 	{
@@ -41,10 +41,11 @@ void	env_add_back(t_env **env_lst, t_env *new)
 		return ;
 	}
 	last = *env_lst;
-	while(last->next)
+	while (last->next)
 		last = last->next;
 	last->next = new;
 }
+
 t_env	*get_env(char **env)
 {
 	int		i;
@@ -52,7 +53,7 @@ t_env	*get_env(char **env)
 
 	i = 0;
 	node = NULL;
-	while(env[i])
+	while (env[i])
 	{
 		add_env_node(&node, env[i]);
 		i++;

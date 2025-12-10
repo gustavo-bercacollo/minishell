@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setters.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 18:30:50 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/07 22:14:40 by klima-do         ###   ########.fr       */
+/*   Updated: 2025/12/10 16:55:30 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	set_infile(t_token **tok, t_command *cmd)
 
 void	run_heredoc_child(char *delim, int write_fd)
 {
-	char *line;
+	char	*line;
 
 	signal(SIGINT, SIG_DFL);
 	while (1)
@@ -88,7 +88,7 @@ void	set_heredoc(t_token **tok, t_command *cmd)
 	*tok = (*tok)->next;
 	cmd->heredoc_fd = create_heredoc((*tok)->value);
 	if (cmd->heredoc_fd == -1)
-		cmd->heredoc = -1; 
+		cmd->heredoc = -1;
 	else
 		cmd->heredoc = 1;
 }

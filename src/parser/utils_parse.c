@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 17:38:23 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/03 18:45:04 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/10 16:54:17 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,3 @@ t_command	*new_command(void)
 	cmd->next = NULL;
 	return (cmd);
 }
-

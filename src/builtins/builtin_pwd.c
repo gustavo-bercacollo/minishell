@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 15:56:21 by klima-do          #+#    #+#             */
-/*   Updated: 2025/11/19 16:00:36 by klima-do         ###   ########.fr       */
+/*   Updated: 2025/12/10 16:57:59 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,5 @@ int	biultin_pwd(void)
 	}
 	printf("%s", pwd);
 	free(pwd);
-	return(0);
+	return (0);
 }

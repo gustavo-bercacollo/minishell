@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 18:53:53 by klima-do          #+#    #+#             */
-/*   Updated: 2025/12/05 17:58:24 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/10 17:05:44 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,17 @@
 int	execute(t_shell *ms, t_command *cmd)
 {
 	int			fd[2];
-	int			fd_in = 0;
+	int			fd_in;
 	pid_t		pids[1024];
-	int			i = 0;
+	int			i;
 	int			status;
-	t_command	*current = cmd;
+	t_command	*current;
 	t_command	*tmp;
+	int			j;
 
+	fd_in = 0;
+	i = 0;
+	current = cmd;
 	tmp = cmd;
 	while (tmp)
 	{
@@ -59,8 +63,6 @@ int	execute(t_shell *ms, t_command *cmd)
 		}
 		current = current->next;
 	}
-	int	j;
-
 	j = 0;
 	while (j < i)
 	{

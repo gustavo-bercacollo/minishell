@@ -6,7 +6,7 @@
 #    By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/17 15:37:39 by klima-do          #+#    #+#              #
-#    Updated: 2025/12/09 20:25:36 by gbercaco         ###   ########.fr        #
+#    Updated: 2025/12/10 16:38:06 by gbercaco         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,5 +66,8 @@ re: fclean all
 
 valgrind: $(NAME)
 	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes --log-file=valgrind.log --trace-children=yes -s --suppressions=readline.supp ./$(NAME)
+
+norminette:
+	@norminette ./src > ./norminette.log || true
 
 .PHONY: all clean fclean re
