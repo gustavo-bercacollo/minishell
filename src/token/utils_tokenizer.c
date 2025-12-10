@@ -6,7 +6,7 @@
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:56:18 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/03 15:42:37 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/09 20:12:19 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,11 @@ t_token	*new_token(char *value, t_toktype type)
 {
 	t_token	*tok;
 
-	tok = malloc(sizeof(t_token));
+	tok = ft_calloc(1, sizeof(t_token));
 	if (!tok)
 		return (NULL);
 	tok->value = value;
 	tok->type = type;
-	tok->next = NULL;
 	return (tok);
 }
 

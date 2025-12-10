@@ -6,7 +6,7 @@
 #    By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/17 15:37:39 by klima-do          #+#    #+#              #
-#    Updated: 2025/12/06 22:23:43 by gbercaco         ###   ########.fr        #
+#    Updated: 2025/12/09 20:25:36 by gbercaco         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,19 +27,20 @@ SRCS = src/main.c \
 	src/token/tokenizer.c \
 	src/token/utils_tokenizer.c \
 	src/token/read_operators.c \
+	src/token/free_tokens.c \
 	src/parser/parse.c \
 	src/parser/setters.c \
 	src/parser/add_argments.c \
 	src/parser/utils_parse.c \
+	src/parser/free_parse.c \
 	src/execute/execute.c \
 	src/execute/child.c \
 	src/execute/parent.c \
 	src/redirections/redirections.c \
 	src/expansions/expansions.c \
 	src/expansions/utils_expansions.c \
-	src/signals/signals.c \
-	src/builtins/env/env.c
-
+	src/signals/signals.c 
+	
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
@@ -62,5 +63,8 @@ fclean: clean
 	@$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
+
+valgrind: $(NAME)
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes --log-file=valgrind.log --trace-children=yes -s --suppressions=readline.supp ./$(NAME)
 
 .PHONY: all clean fclean re
