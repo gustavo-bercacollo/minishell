@@ -14,28 +14,63 @@
 
 int	execute(t_shell *ms, t_command *cmd)
 {
-	int		fd[2];
-	pid_t	pid;
-	int		fd_in;
+	int			fd[2];
+	int			fd_in = 0;
+	pid_t		pids[1024];
+	int			i = 0;
+	int			status;
+	t_command	*current = cmd;
+	t_command	*tmp;
 
-	fd_in = 0;
-	while (cmd)
+	tmp = cmd;
+	while (tmp)
 	{
-		if (cmd->next)
-			pipe(fd);
-		pid = fork();
-		if (pid < 0)
+		if (tmp->heredoc == -1)
+		{
+			ms->last_status = 130;
+			return (130);
+		}
+		tmp = tmp->next;
+	}
+	signal(SIGINT, SIG_IGN);
+	while (current)
+	{
+		if (current->next && pipe(fd) == -1)
+			return (perror("pipe"), 1);
+		pids[i] = fork();
+		if (pids[i] < 0)
 			return (perror("fork"), 1);
-		else if (pid == 0)
-			run_child(ms, cmd, fd_in, fd);
+		if (pids[i] == 0)
+		{
+			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
+			run_child(ms, current, fd_in, fd);
+		}
 		else
 		{
-			signal(SIGINT, SIG_IGN);
-			wait_child_and_update_status(pid, ms);
-			handle_pipe_parent(&fd_in, fd, cmd);
-			signal(SIGINT, sigint_handler);
+			if (fd_in != 0)
+				close(fd_in);
+			if (current->next)
+			{
+				close(fd[1]);
+				fd_in = fd[0];
+			}
+			i++;
 		}
-		cmd = cmd->next;
+		current = current->next;
 	}
+	int	j;
+
+	j = 0;
+	while (j < i)
+	{
+		waitpid(pids[j], &status, 0);
+		if (WIFEXITED(status))
+			ms->last_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			ms->last_status = 128 + WTERMSIG(status);
+		j++;
+	}
+	signal(SIGINT, sigint_handler);
 	return (ms->last_status);
 }
