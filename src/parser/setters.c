@@ -38,68 +38,57 @@ void	set_infile(t_token **tok, t_command *cmd)
 	cmd->infile = ft_strdup((*tok)->value);
 }
 
-void	sigint_heredoc(int sig)
+void	run_heredoc_child(char *delim, int write_fd)
 {
-	(void)sig;
-	g_interrupted = 1;
-	close(STDIN_FILENO);
-}
+	char *line;
 
-void	restoring_stdin(t_command *cmd, t_heredoc *doc)
-{
-	if (cmd->heredoc == -1)
-	{
-		close(doc->fd[0]);
-		close(doc->fd[1]);
-		dup2(doc->saved_stdin, STDIN_FILENO);
-		close(doc->saved_stdin);
-		init_signals();
-		return ;
-	}
-}
-
-void	loop_heredoc(t_heredoc *doc)
-{
+	signal(SIGINT, SIG_DFL);
 	while (1)
 	{
-		doc->line = readline("> ");
-		if (!doc->line && g_interrupted)
+		line = readline("> ");
+		if (!line)
+			exit(0);
+		if (ft_strcmp(line, delim) == 0)
 		{
-			g_interrupted = 0;
-			doc->cmd->heredoc = -1;
-			return ;
+			free(line);
+			exit(0);
 		}
-		if (!doc->line)
-			return ;
-		if (ft_strcmp(doc->line, doc->delim) == 0)
-		{
-			free(doc->line);
-			return ;
-		}
-		write(doc->fd[1], doc->line, ft_strlen(doc->line));
-		write(doc->fd[1], "\n", 1);
-		free(doc->line);
+		write(write_fd, line, ft_strlen(line));
+		write(write_fd, "\n", 1);
+		free(line);
 	}
+}
+
+int	create_heredoc(char *delim)
+{
+	int		fd[2];
+	pid_t	pid;
+	int		status;
+
+	if (pipe(fd) == -1)
+		return (-1);
+	pid = fork();
+	if (pid == 0)
+	{
+		close(fd[0]);
+		run_heredoc_child(delim, fd[1]);
+	}
+	close(fd[1]);
+	waitpid(pid, &status, 0);
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	{
+		close(fd[0]);
+		return (-1);
+	}
+	return (fd[0]);
 }
 
 void	set_heredoc(t_token **tok, t_command *cmd)
 {
-	t_heredoc	doc;
-
-	if (!(*tok)->next)
-		return (ft_putendl_fd("minishell: syntax error near `newline`", 2));
-	(*tok) = (*tok)->next;
-	doc.delim = (*tok)->value;
-	doc.cmd = cmd;
-	pipe(doc.fd);
-	doc.saved_stdin = dup(STDIN_FILENO);
-	signal(SIGINT, sigint_heredoc);
-	loop_heredoc(&doc);
-	restoring_stdin(cmd, &doc);
-	close(doc.fd[1]);
-	dup2(doc.saved_stdin, STDIN_FILENO);
-	close(doc.saved_stdin);
-	init_signals();
-	cmd->heredoc_fd = doc.fd[0];
-	cmd->heredoc = 1;
+	*tok = (*tok)->next;
+	cmd->heredoc_fd = create_heredoc((*tok)->value);
+	if (cmd->heredoc_fd == -1)
+		cmd->heredoc = -1; 
+	else
+		cmd->heredoc = 1;
 }
