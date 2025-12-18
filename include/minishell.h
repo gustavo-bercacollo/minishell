@@ -164,4 +164,8 @@ void	free_parse(t_command **cmd);
 char	*get_path_prompt(void);
 char	*get_path(char **envp, char *cmd);
 
+/*AST*/
+t_ast 	*ast_from_cmd(t_command *cmd);
+t_ast 	*new_ast_node(t_node_type type, t_ast *left, t_ast *right);
+t_ast 	*parse_pipe(t_token **tok);
 #endif
