@@ -26,18 +26,38 @@ typedef enum e_toktype
 {
 	TOK_WORD,
 	TOK_PIPE,
+	TOK_AND,
+	TOK_OR,
 	TOK_REDIR_IN,
 	TOK_REDIR_OUT,
 	TOK_REDIR_APPEND,
 	TOK_HEREDOC
 }	t_toktype;
 
+
+typedef enum e_node_type
+{
+	NODE_CMD,
+	NODE_PIPE,
+	NODE_AND,
+	NODE_OR
+}	t_node_type;
+
+
+typedef struct s_ast
+{
+	t_node_type		type;
+	struct s_ast 	*left;
+	struct s_ast	*right;
+	t_command		*cmd;
+}	t_ast;
+
 typedef struct s_token
 {
-	char	*value;
-	t_toktype	type;
+	char				*value;
+	t_toktype			type;
 	int	single_quoted;
-	struct s_token	*next;
+	struct s_token		*next;
 }	t_token;
 
 typedef struct s_command
@@ -88,7 +108,7 @@ int	is_builtin(const char *cmd);
 int	execute_builtin(t_shell *ms, t_command *cmd);
 
 /* Parser */
-t_command	*parse(t_token *tok);
+t_command	*parse_cmd(t_token **tok);
 
 /* Setters */
 void	set_outfile(t_token **tok, t_command *cmd);
