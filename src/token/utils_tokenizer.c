@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_tokenizer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:56:18 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/09 20:12:19 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/22 20:05:09 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,24 @@ t_token	*read_word(char **s)
 	char	*start;
 	int		len;
 	char	*word;
+	t_token	*tok;
 
 	start = *s;
 	len = 0;
 	while ((*s)[len] && (*s)[len] != ' ' && (*s)[len] != '\t'
 		&& (*s)[len] != '|' && (*s)[len] != '<' && (*s)[len] != '>')
-	{
 		len++;
-	}
 	word = ft_strndup(start, len);
+	if (!word)
+		return (NULL);
 	*s += len;
-	return (new_token(word, TOK_WORD));
+	tok = new_token(word, TOK_WORD);
+	if (!tok)
+	{
+		free(word);
+		return (NULL);
+	}
+	return (tok);
 }
 
 t_token	*read_quotes(char **s)
@@ -62,14 +69,21 @@ t_token	*read_quotes(char **s)
 	len = 0;
 	while ((*s)[len] && (*s)[len] != quote)
 		len++;
-	(*s) += len;
-	if (**s == quote)
-		(*s)++;
+	if (!(*s)[len])
+	{
+		ft_putendl_fd("minishell: syntax error: unclosed quote", 2);
+		return (NULL);
+	}
 	word = ft_strndup(start, len);
+	if (!word)
+		return (NULL);
+	*s += len + 1;
 	tok = new_token(word, TOK_WORD);
-	if (quote == '\'')
-		tok->single_quoted = 1;
-	else
-		tok->single_quoted = 0;
+	if (!tok)
+	{
+		free(word);
+		return (NULL);
+	}
+	tok->single_quoted = (quote == '\'');
 	return (tok);
 }
