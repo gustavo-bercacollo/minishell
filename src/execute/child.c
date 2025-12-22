@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 18:53:53 by klima-do          #+#    #+#             */
-/*   Updated: 2025/12/10 17:56:58 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/22 19:33:22 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	run_child(t_shell *ms, t_command *cmd, int fd_in, int fd[2])
 	{
 		ft_putstr_fd("minishell: command not found: ", 2);
 		ft_putendl_fd(cmd->argv[0], 2);
-		exit(127);
+		_exit(127);
 	}
 	execve(path, cmd->argv, ms->envp);
 	perror("execve");
-	exit(1);
+	_exit(1);
 }
