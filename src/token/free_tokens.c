@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   free_tokens.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 16:02:03 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/08 21:16:06 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/22 20:16:06 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_token(t_token *token)
+{
+	if (!token)
+		return;
+	if (token->value)
+		free(token->value);
+	free(token);
+}
 
 void	free_tokens(t_token **tokens)
 {
@@ -22,7 +31,8 @@ void	free_tokens(t_token **tokens)
 	{
 		temp = *tokens;
 		*tokens = (*tokens)->next;
-		free(temp->value);
+		if (temp->value)
+			free(temp->value);
 		free(temp);
 	}
 }
