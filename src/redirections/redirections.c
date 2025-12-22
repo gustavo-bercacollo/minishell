@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 20:04:11 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/10 17:56:13 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/18 20:19:24 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,15 @@ void	handle_pipe_output(int fd[2])
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[0]);
 	close(fd[1]);
+}
+
+int	apply_redirections(t_command *cmd)
+{
+	if (cmd->heredoc_fd >= 0)
+		handle_heredoc(cmd);
+	if (cmd->infile)
+		handle_infile(cmd);
+	if (cmd->outfile)
+		handle_outfile(cmd);
+	return (0);
 }
