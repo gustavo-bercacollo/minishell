@@ -6,16 +6,12 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 14:46:12 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/22 20:48:37 by klima-do         ###   ########.fr       */
+/*   Updated: 2025/12/22 20:49:25 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-** Expande um ÚNICO comando.
-** Regra: se substituir argv[i], libera o antigo antes.
-*/
 void	expand_cmd(t_shell *ms, t_command *cmd)
 {
 	int		i;
