@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/17 17:50:25 by klima-do          #+#    #+#             */
-/*   Updated: 2025/12/17 17:07:48 by klima-do         ###   ########.fr       */
+/*   Created: 2025/12/22 17:47:09 by klima-do          #+#    #+#             */
+/*   Updated: 2025/12/22 20:39:22 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,47 @@
 t_command	*parse_cmd(t_token **tok)
 {
 	t_command	*cmd;
+	t_token 	*tmp;
+	int			consumed;
 
 	cmd = new_command();
+	consumed = 0;
 	while (*tok && (*tok)->type != TOK_AND
-			&&(*tok)->type != TOK_OR
-			&&(*tok)->type != TOK_PIPE)
+		&& (*tok)->type != TOK_OR
+		&& (*tok)->type != TOK_PIPE)
 	{
 		if ((*tok)->type == TOK_WORD)
-			add_arg(cmd, tok);
-		else if ((*tok)->type == TOK_REDIR_OUT || (*tok)->type == TOK_REDIR_APPEND)
-			set_outfile(&tok, cmd);
-		else if ((*tok)->type == TOK_HEREDOC)
-			set_heredoc(&tok, cmd);
+		{
+
+			tmp = *tok;
+			add_arg(cmd, tmp);
+			*tok = (*tok)->next;
+			free_token(tmp);
+			consumed = 1;
+		}
+		else if ((*tok)->type == TOK_REDIR_OUT
+			|| (*tok)->type == TOK_REDIR_APPEND)
+		{
+			set_outfile(tok, cmd);
+			consumed = 1;
+		}
 		else if ((*tok)->type == TOK_REDIR_IN)
-			set_infile(&tok, cmd);
-		*tok = (*tok)->next;
+		{
+			set_infile(tok, cmd);
+			consumed = 1;
+		}
+		else if ((*tok)->type == TOK_HEREDOC)
+		{
+			set_heredoc(tok, cmd);
+			consumed = 1;
+		}
+		else
+			break ;
+	}
+	if (!consumed)
+	{
+		free_command(cmd);
+		return (NULL);
 	}
 	return (cmd);
 }
