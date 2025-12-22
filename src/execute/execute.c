@@ -3,76 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 18:53:53 by klima-do          #+#    #+#             */
-/*   Updated: 2025/12/10 17:05:44 by gbercaco         ###   ########.fr       */
+/*   Updated: 2025/12/22 20:39:58 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	execute(t_shell *ms, t_command *cmd)
+int	execute_node(t_shell *ms, t_ast *node)
 {
-	int			fd[2];
-	int			fd_in;
-	pid_t		pids[1024];
-	int			i;
-	int			status;
-	t_command	*current;
-	t_command	*tmp;
-	int			j;
-
-	fd_in = 0;
-	i = 0;
-	current = cmd;
-	tmp = cmd;
-	while (tmp)
-	{
-		if (tmp->heredoc == -1)
-		{
-			ms->last_status = 130;
-			return (130);
-		}
-		tmp = tmp->next;
-	}
-	signal(SIGINT, SIG_IGN);
-	while (current)
-	{
-		if (current->next && pipe(fd) == -1)
-			return (perror("pipe"), 1);
-		pids[i] = fork();
-		if (pids[i] < 0)
-			return (perror("fork"), 1);
-		if (pids[i] == 0)
-		{
-			signal(SIGINT, SIG_DFL);
-			signal(SIGQUIT, SIG_DFL);
-			run_child(ms, current, fd_in, fd);
-		}
-		else
-		{
-			if (fd_in != 0)
-				close(fd_in);
-			if (current->next)
-			{
-				close(fd[1]);
-				fd_in = fd[0];
-			}
-			i++;
-		}
-		current = current->next;
-	}
-	j = 0;
-	while (j < i)
-	{
-		waitpid(pids[j], &status, 0);
-		if (WIFEXITED(status))
-			ms->last_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			ms->last_status = 128 + WTERMSIG(status);
-		j++;
-	}
-	signal(SIGINT, sigint_handler);
-	return (ms->last_status);
+	if (!node)
+		return (0);
+	if (node->type == NODE_CMD)
+		return (execute_cmd(ms, node));
+	if (node->type == NODE_PIPE)
+		return (execute_pipe(ms, node));
+	if (node->type == NODE_AND)
+		return (execute_and(ms, node));
+	if (node->type == NODE_OR)
+		return (execute_or(ms,node));
+	return (0);
 }
