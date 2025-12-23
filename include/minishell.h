@@ -43,23 +43,6 @@ typedef enum e_node_type
 	NODE_OR
 }	t_node_type;
 
-
-typedef struct s_ast
-{
-	t_node_type		type;
-	struct s_ast 	*left;
-	struct s_ast	*right;
-	t_command		*cmd;
-}	t_ast;
-
-typedef struct s_token
-{
-	char				*value;
-	t_toktype			type;
-	int	single_quoted;
-	struct s_token		*next;
-}	t_token;
-
 typedef struct s_command
 {
 	char	**argv;
@@ -72,6 +55,26 @@ typedef struct s_command
 	int	argc;
 	struct	s_command *next;
 }	t_command;
+
+typedef struct s_token
+{
+	char				*value;
+	t_toktype			type;
+	int	single_quoted;
+	struct s_token		*next;
+}	t_token;
+
+typedef struct s_ast
+{
+	t_node_type		type;
+	t_token			*token;
+	t_command		*cmd;
+	struct s_ast 	*left;
+	struct s_ast	*right;
+}	t_ast;
+
+
+
 
 typedef struct t_shell
 {
@@ -109,6 +112,11 @@ int	execute_builtin(t_shell *ms, t_command *cmd);
 
 /* Parser */
 t_command	*parse_cmd(t_token **tok);
+t_ast 		*parse_pipe(t_token **tok);
+t_ast		*parser_and_or(t_token **tok);
+t_ast 		*parse_ast(t_token **tok);
+t_ast 		*new_ast_node(t_node_type type, t_ast *left, t_ast *right);
+t_ast 		*ast_from_cmd(t_command *cmd);
 
 /* Setters */
 void	set_outfile(t_token **tok, t_command *cmd);
@@ -116,7 +124,11 @@ void	set_infile(t_token **tok, t_command *cmd);
 void	set_heredoc(t_token **tok, t_command *cmd);
 
 /* Execute */
-int	execute(t_shell *ms, t_command *cmd);
+int execute_node(t_shell *ms, t_ast *node);
+int	execute_cmd(t_shell *ms, t_ast *node);
+int	execute_pipe(t_shell *ms, t_ast *node);
+int	execute_or(t_shell *ms, t_ast *node);
+int	execute_and(t_shell *ms, t_ast *node);
 
 /* Utils Execute */
 void	exec_child(t_shell *ms, t_command *cmd);
@@ -130,6 +142,7 @@ void	handle_infile(t_command *cmd);
 void	handle_heredoc(t_command *cmd);
 void	handle_pipe_input(int fd_in);
 void	handle_pipe_output(int fd[2]);
+int		apply_redirections(t_command *cmd);
 
 /* Utils Tokenizer*/
 void	skip_spaces(char **s);
@@ -143,7 +156,8 @@ t_command	*new_command(void);
 void add_arg(t_command *cmd, t_token *tok);
 
 /* Expansions */
-void	expand(t_shell *ms, t_command *cmd_list);
+void 	expand_cmd(t_shell *ms, t_command *cmd);
+void	expand_ast(t_shell *ms, t_ast *node);
 
 /* Utils Expansions */
 char	*process_arg(char *arg);
@@ -158,7 +172,9 @@ void	set_default_signals_for_child(void);
 
 /* Free */
 void	free_tokens(t_token **tokens);
-void	free_parse(t_command **cmd);
+void	free_ast(t_ast *node);
+void	free_command(t_command *cmd);
+void	free_token(t_token *token);
 
 /* Utils */
 char	*get_path_prompt(void);
