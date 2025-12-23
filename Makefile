@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+         #
+#    By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/17 15:37:39 by klima-do          #+#    #+#              #
-#    Updated: 2025/12/10 16:38:06 by gbercaco         ###   ########.fr        #
+#    Updated: 2025/12/22 17:08:08 by klima-do         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,6 @@ SRCS = src/main.c \
 	src/token/utils_tokenizer.c \
 	src/token/read_operators.c \
 	src/token/free_tokens.c \
-	src/parser/parse.c \
 	src/parser/setters.c \
 	src/parser/add_argments.c \
 	src/parser/utils_parse.c \
@@ -39,8 +38,18 @@ SRCS = src/main.c \
 	src/redirections/redirections.c \
 	src/expansions/expansions.c \
 	src/expansions/utils_expansions.c \
-	src/signals/signals.c 
-	
+	src/signals/signals.c \
+	src/execute/execute_and.c\
+	src/execute/execute_cmd.c\
+	src/execute/execute_or.c\
+	src/execute/execute_pipes.c\
+	src/parser/ast_from_cmd.c\
+	src/parser/new_ast_cmd.c\
+	src/parser/parse_cmd.c\
+	src/parser/parse_pipe.c\
+	src/parser/parse_and_or.c\
+	src/parser/parse_ast.c
+
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
