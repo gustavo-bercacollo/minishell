@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 18:45:06 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/22 19:22:52 by klima-do         ###   ########.fr       */
+/*   Updated: 2025/12/22 21:17:59 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@ void	init_shell(char **line, t_token **tokens, t_ast **ast, t_shell *ms)
 {
 	while (1)
 	{
+		g_interrupted = 1;
 		*line = readline("minishell> ");
+		g_interrupted = 0;
 		if (!*line)
 			break ;
-
 		if (**line)
 			add_history(*line);
 		*tokens = tokenize(*line);
@@ -34,7 +35,6 @@ void	init_shell(char **line, t_token **tokens, t_ast **ast, t_shell *ms)
 		free(*line);
 	}
 }
-
 
 int	main(int argc, char **argv, char **envp)
 {
