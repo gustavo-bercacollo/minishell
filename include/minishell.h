@@ -20,6 +20,8 @@
 #include <readline/history.h>
 #include "../libft/libft.h"
 
+#define HASH_SIZE 128;
+
 extern int g_interrupted;
 
 typedef enum e_toktype
@@ -55,6 +57,13 @@ typedef struct s_command
 	int	argc;
 	struct	s_command *next;
 }	t_command;
+
+typedef struct s_hash_env
+{
+	char				*key;
+	char				*value;
+	struct s_hash_env	*next;
+}	t_hash_env;
 
 typedef struct s_token
 {
