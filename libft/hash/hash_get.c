@@ -1,39 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   hash_get.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/04 19:15:45 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/27 16:28:26 by klima-do         ###   ########.fr       */
+/*   Created: 2025/12/27 20:21:19 by klima-do          #+#    #+#             */
+/*   Updated: 2025/12/27 20:26:16 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "hash.h"
 
-int		g_interrupted = 0;
-
-void	sigint_handler(int sig)
+t_hash_node	*hash_get(t_hash *hash, char *key)
 {
-	(void)sig;
-	write(1, "\n", 1);
-	if (g_interrupted)
+	unsigned int	index;
+	t_hash_node		*current;
+
+	if (!hash || !key)
+		return (NULL);
+	index = hash_func(key, hash->size);
+	current = hash->buckets[index];
+	while(current)
 	{
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		if (ft_strcmp(current->key, key) == 0)
+			return (current);
+		current = current->next;
 	}
-}
-
-void	init_signals(void)
-{
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-void	set_default_signals_for_child(void)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	return (NULL);
 }

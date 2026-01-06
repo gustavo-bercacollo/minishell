@@ -1,39 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   hash_node_create.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/04 19:15:45 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/27 16:28:26 by klima-do         ###   ########.fr       */
+/*   Created: 2025/12/27 19:10:57 by klima-do          #+#    #+#             */
+/*   Updated: 2025/12/27 19:13:07 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "hash.h"
 
-int		g_interrupted = 0;
-
-void	sigint_handler(int sig)
+t_hash_node	*create_hash_node(char *key, char *value)
 {
-	(void)sig;
-	write(1, "\n", 1);
-	if (g_interrupted)
+	t_hash_node	*node;
+
+	node = malloc(sizeof(t_hash_node));
+	if (!node)
 	{
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		perror("Fail to malloc hash node");
+		return (NULL);
 	}
-}
-
-void	init_signals(void)
-{
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-void	set_default_signals_for_child(void)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	node->key = ft_strdup(key);
+	node->value = ft_strdup(value);
+	node->next = NULL;
+	return (node);
 }
