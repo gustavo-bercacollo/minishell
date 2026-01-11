@@ -183,9 +183,9 @@ char	*replace_var_in_arg(char *arg, char *var_name, char *value);
 char	*expand_variable_in_arg(t_shell *ms, char *arg, char *var_name);
 
 /* Signals */
-void	sigint_handler(int sig);
-void	init_signals(void);
-void	set_default_signals_for_child(void);
+void	set_signals_interactive(void);
+void	set_signals_noninteractive(void);
+void	set_signals_child(void);
 
 /* Free */
 void	free_tokens(t_token **tokens);
