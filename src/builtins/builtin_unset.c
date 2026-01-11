@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hash_func.c                                        :+:      :+:    :+:   */
+/*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/27 19:06:13 by klima-do          #+#    #+#             */
-/*   Updated: 2026/01/08 15:43:50 by klima-do         ###   ########.fr       */
+/*   Created: 2026/01/06 19:39:42 by klima-do          #+#    #+#             */
+/*   Updated: 2026/01/07 16:57:48 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "hash.h"
+#include "minishell.h"
 
-unsigned int	hash_func(const char *key, size_t	size)
+void	unset_one(t_hash *hash, char *str)
 {
-	unsigned int	hash;
+	if (!str || !*str)
+		return;
+	hash_unset(hash, str);
+}
 
-	hash = 0;
-	while (*key)
+void	biutin_unset(t_shell *sh, char **argv)
+{
+	int	index;
+
+	index = 1;
+	while(argv[index])
 	{
-		hash = hash * 31 + (unsigned char)(*key);
-		key++;
+		unset_one(sh->env, argv[index]);
+		index++;
 	}
-	return ((hash) % size);
 }

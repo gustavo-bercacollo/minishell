@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:18:06 by klima-do          #+#    #+#             */
-/*   Updated: 2025/11/17 18:00:39 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/08 16:23:49 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,29 +24,71 @@ char	*find_env_path(char **envp)
 	return (envp[i] + 5);
 }
 
-char	*get_path(char **envp, char *cmd)
+char	*hash_get_value(t_hash *hash, char *key)
 {
-	char	*envp_path;
-	int		j;
+	t_hash_node	*node;
+
+	node = hash_get(hash, key);
+	if (!node)
+		return (NULL);
+	return (node->value);
+}
+
+void debug_env(t_hash *env)
+{
+	size_t i;
+	t_hash_node *n;
+
+	i = 0;
+	while (i < env->size)
+	{
+		n = env->buckets[i];
+		while (n)
+		{
+			ft_putstr_fd("KEY=[", 2);
+			ft_putstr_fd(n->key, 2);
+			ft_putstr_fd("] VALUE=[", 2);
+			ft_putstr_fd(n->value, 2);
+			ft_putendl_fd("]", 2);
+			n = n->next;
+		}
+		i++;
+	}
+}
+
+char	*get_path(t_hash *env, char *cmd)
+{
+	char	*path_env;
 	char	**dirs;
 	char	*path;
-	char	*temp;
+	char	*tmp;
+	int		i;
 
-	envp_path = find_env_path(envp);
-	dirs = ft_split(envp_path, ':');
-	j = 0;
-	while (dirs[j])
+	if (!cmd || ft_strchr(cmd, '/'))
 	{
-		temp = ft_strjoin(dirs[j], "/");
-		path = ft_strjoin(temp, cmd);
-		free(temp);
+		if (access(cmd, X_OK) == 0)
+			return (ft_strdup(cmd));
+		return (NULL);
+	}
+	path_env = hash_get_value(env, "PATH");
+	if (!path_env)
+		return (NULL);
+	dirs = ft_split(path_env, ':');
+	if (!dirs)
+		return (NULL);
+	i = 0;
+	while (dirs[i])
+	{
+		tmp = ft_strjoin(dirs[i], "/");
+		path = ft_strjoin(tmp, cmd);
+		free(tmp);
 		if (access(path, X_OK) == 0)
 		{
 			ft_free_split(dirs);
 			return (path);
 		}
 		free(path);
-		j++;
+		i++;
 	}
 	ft_free_split(dirs);
 	return (NULL);

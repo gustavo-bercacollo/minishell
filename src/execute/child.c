@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 18:53:53 by klima-do          #+#    #+#             */
-/*   Updated: 2025/12/22 19:33:22 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/08 15:34:08 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	run_child(t_shell *ms, t_command *cmd, int fd_in, int fd[2])
 {
 	char	*path;
-
+	char	**envp;
+	
 	if (cmd->heredoc == 1)
 		handle_heredoc(cmd);
 	else if (fd_in != 0)
@@ -26,14 +27,16 @@ void	run_child(t_shell *ms, t_command *cmd, int fd_in, int fd[2])
 		handle_pipe_output(fd);
 	if (cmd->outfile)
 		handle_outfile(cmd);
-	path = get_path(ms->envp, cmd->argv[0]);
+	path = get_path(ms->env, cmd->argv[0]);
 	if (!path)
 	{
 		ft_putstr_fd("minishell: command not found: ", 2);
 		ft_putendl_fd(cmd->argv[0], 2);
 		_exit(127);
 	}
-	execve(path, cmd->argv, ms->envp);
+	envp = hash_to_envp(ms->env);
+	execve(path, cmd->argv, envp);
 	perror("execve");
+	free_envp(envp);
 	_exit(1);
 }

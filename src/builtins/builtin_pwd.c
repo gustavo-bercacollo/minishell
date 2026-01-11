@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 15:56:21 by klima-do          #+#    #+#             */
-/*   Updated: 2025/12/10 16:57:59 by gbercaco         ###   ########.fr       */
+/*   Updated: 2026/01/08 18:16:40 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	biultin_pwd(void)
+int	builtin_pwd(void)
 {
 	char	*pwd;
 
@@ -22,7 +22,7 @@ int	biultin_pwd(void)
 		perror("pwd");
 		return (1);
 	}
-	printf("%s", pwd);
+	printf("%s\n", pwd);
 	free(pwd);
 	return (0);
 }

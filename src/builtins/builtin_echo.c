@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 14:57:49 by klima-do          #+#    #+#             */
-/*   Updated: 2025/12/03 15:41:54 by gbercaco         ###   ########.fr       */
+/*   Updated: 2026/01/07 17:30:58 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	is_n_flag(char *str)
+{
+	int	i;
+
+	if (str[0] != '-' || str[1] != 'n')
+		return (0);
+	i = 1;
+	while (str[i] == 'n')
+		i++;
+	return (str[i] == '\0');
+}
 
 int	builtin_echo(char **argv)
 {
@@ -19,11 +31,10 @@ int	builtin_echo(char **argv)
 
 	i = 1;
 	new_l = 1;
-	if (argv[i] && !ft_strncmp(argv[i], "-n", 2))
+	while (argv[i] && is_n_flag(argv[i]))
 	{
 		new_l = 0;
-		while (argv[i] && !ft_strncmp(argv[i], "-n", 2))
-			i++;
+		i++;
 	}
 	while (argv[i])
 	{

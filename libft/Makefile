@@ -6,6 +6,7 @@ NUM_DIR = number
 PRINT_DIR = print
 ASCII_DIR = ascii
 STACK_DIR = stack
+HASH_DIR = hash
 
 BONUS_SRCS = \
 	$(LIST_DIR)/ft_lstadd_back_bonus.c \
@@ -62,7 +63,14 @@ SRCS = \
 	$(STACK_DIR)/init_stack.c \
 	$(STACK_DIR)/stack_clear.c \
 	$(STACK_DIR)/find_last.c \
-	memory_management/ft_free_split.c
+	memory_management/ft_free_split.c \
+	$(HASH_DIR)/hash_create.c \
+	$(HASH_DIR)/hash_set.c \
+	$(HASH_DIR)/hash_get.c \
+	$(HASH_DIR)/hash_unset.c \
+	$(HASH_DIR)/hash_func.c \
+	$(HASH_DIR)/hash_node_create.c
+
 
 OBJS = $(SRCS:.c=.o)
 BONUS_OBJS = $(BONUS_SRCS:.c=.o)

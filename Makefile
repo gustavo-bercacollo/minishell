@@ -6,7 +6,7 @@
 #    By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/17 15:37:39 by klima-do          #+#    #+#              #
-#    Updated: 2025/12/22 17:08:08 by klima-do         ###   ########.fr        #
+#    Updated: 2026/01/08 18:35:57 by klima-do         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,6 @@ LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 SRCS = src/main.c \
-	src/builtins/builtin_echo.c \
-	src/builtins/utils_builtins.c \
 	src/utils/get_prompt_path.c \
 	src/utils/get_path.c \
 	src/token/tokenizer.c \
@@ -35,6 +33,7 @@ SRCS = src/main.c \
 	src/execute/execute.c \
 	src/execute/child.c \
 	src/execute/parent.c \
+	src/execute/utils_envp_hash.c \
 	src/redirections/redirections.c \
 	src/expansions/expansions.c \
 	src/expansions/utils_expansions.c \
@@ -48,8 +47,18 @@ SRCS = src/main.c \
 	src/parser/parse_cmd.c\
 	src/parser/parse_pipe.c\
 	src/parser/parse_and_or.c\
-	src/parser/parse_ast.c
-
+	src/parser/parse_ast.c\
+	src/env/env.c \
+	src/env/free_hash.c \
+	src/builtins/builtin_cd.c \
+	src/builtins/builtin_echo.c \
+	src/builtins/builtin_env.c \
+	src/builtins/builtin_exit.c \
+	src/builtins/builtin_pwd.c \
+	src/builtins/builtin_unset.c \
+	src/builtins/utils_builtins.c \
+	src/builtins/builtin_export.c
+	
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)

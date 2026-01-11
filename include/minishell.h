@@ -19,8 +19,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "../libft/libft.h"
-
-#define HASH_SIZE 128;
+#include "../libft/hash/hash.h"
 
 extern int g_interrupted;
 
@@ -82,14 +81,13 @@ typedef struct s_ast
 	struct s_ast	*right;
 }	t_ast;
 
-
-
-
 typedef struct t_shell
 {
-	char	**envp;
+	t_hash  *env;
 	char	*input;
 	int		last_status;
+	int     should_exit;
+	int     exit_status;
 	t_token	*tokens;
 }	t_shell;
 
@@ -113,11 +111,21 @@ typedef struct s_env
 t_token *tokenize(char *comand);
 
 /* Builtins */
-int	builtin_echo(char **argv);
+int		builtin_echo(char **argv);
+void	free_dictionary(char *key, char *value);
+int		biultin_envp(char **envp);
+t_hash	*env_hash_init(char **env);
+void	free_hash(t_hash *hash);
 
 /* Utils Builtins */
 int	is_builtin(const char *cmd);
 int	execute_builtin(t_shell *ms, t_command *cmd);
+int	builtin_cd(t_shell *ms, char **argv);
+int	biultin_env(t_hash *env);
+int builtin_exit(t_shell *ms, char **argv);
+int	builtin_export(t_shell *ms, char **argv);
+int	builtin_pwd(void);
+void	biutin_unset(t_shell *sh, char **argv);
 
 /* Parser */
 t_command	*parse_cmd(t_token **tok);
@@ -126,24 +134,24 @@ t_ast		*parser_and_or(t_token **tok);
 t_ast 		*parse_ast(t_token **tok);
 t_ast 		*new_ast_node(t_node_type type, t_ast *left, t_ast *right);
 t_ast 		*ast_from_cmd(t_command *cmd);
-
 /* Setters */
 void	set_outfile(t_token **tok, t_command *cmd);
 void	set_infile(t_token **tok, t_command *cmd);
 void	set_heredoc(t_token **tok, t_command *cmd);
-
 /* Execute */
-int execute_node(t_shell *ms, t_ast *node);
-int	execute_cmd(t_shell *ms, t_ast *node);
-int	execute_pipe(t_shell *ms, t_ast *node);
-int	execute_or(t_shell *ms, t_ast *node);
-int	execute_and(t_shell *ms, t_ast *node);
-
+int 	execute_node(t_shell *ms, t_ast *node);
+int		execute_cmd(t_shell *ms, t_ast *node);
+int		execute_pipe(t_shell *ms, t_ast *node);
+int		execute_or(t_shell *ms, t_ast *node);
+int		execute_and(t_shell *ms, t_ast *node);
+void	free_envp(char **envp);
+char	**hash_to_envp(t_hash *hash);
 /* Utils Execute */
 void	exec_child(t_shell *ms, t_command *cmd);
 void	run_child(t_shell *ms, t_command *cmd, int fd_in, int fd[2]);
 void	wait_child_and_update_status(pid_t pid, t_shell *ms);
 void	handle_pipe_parent(int *fd_in, int fd[2], t_command *cmd);
+char	*hash_get_value(t_hash *hash, char *key);
 
 /* Redirections */
 void	handle_outfile(t_command *cmd);
@@ -187,7 +195,7 @@ void	free_token(t_token *token);
 
 /* Utils */
 char	*get_path_prompt(void);
-char	*get_path(char **envp, char *cmd);
+char	*get_path(t_hash *env, char *cmd);
 
 /*AST*/
 t_ast 	*ast_from_cmd(t_command *cmd);

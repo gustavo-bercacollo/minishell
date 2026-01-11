@@ -3,60 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 18:53:53 by klima-do          #+#    #+#             */
-/*   Updated: 2025/12/10 17:07:03 by gbercaco         ###   ########.fr       */
+/*   Updated: 2026/01/08 16:03:37 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	add_env_node(t_env **env_lst, char *env_line)
+t_hash	*env_hash_init(char **env)
 {
-	char	*postion;
-	t_env	*env_node;
-
-	postion = ft_strchr(env_line, '=');
-	if (!postion)
-		return ;
-	env_node = malloc(sizeof(t_env));
-	if (!env_node)
-		return ;
-	env_node->key = ft_substr(env_line, 0, postion - env_line);
-	env_node->value = ft_strdup(postion + 1);
-	env_node->next = NULL;
-	env_add_back(env_lst, env_node);
-}
-
-void	env_add_back(t_env **env_lst, t_env *new)
-{
-	t_env	*last;
-
-	if (!env_lst || !new)
-		return ;
-	if (*env_lst == NULL)
-	{
-		*env_lst = new;
-		return ;
-	}
-	last = *env_lst;
-	while (last->next)
-		last = last->next;
-	last->next = new;
-}
-
-t_env	*get_env(char **env)
-{
+	t_hash	*hash;
+	char	*key;
+	char	*value;
+	char	*position;
 	int		i;
-	t_env	*node;
 
+	hash = hash_create(128);
+	if (!hash)
+		return (NULL);
 	i = 0;
-	node = NULL;
 	while (env[i])
 	{
-		add_env_node(&node, env[i]);
+		position = ft_strchr(env[i], '=');
+		if (position)
+		{
+			key = ft_substr(env[i], 0, position - env[i]);
+			value = ft_strdup(position + 1);
+			hash_set(hash, key, value);
+		}
 		i++;
 	}
-	return (node);
+	return (hash);
 }

@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 19:10:57 by klima-do          #+#    #+#             */
-/*   Updated: 2025/12/27 19:13:07 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/08 17:25:58 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_hash_node	*create_hash_node(char *key, char *value)
 	node = malloc(sizeof(t_hash_node));
 	if (!node)
 	{
-		perror("Fail to malloc hash node");
 		return (NULL);
 	}
 	node->key = ft_strdup(key);
