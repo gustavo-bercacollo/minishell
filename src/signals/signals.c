@@ -6,33 +6,51 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 19:15:45 by gbercaco          #+#    #+#             */
-/*   Updated: 2026/01/11 18:55:32 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 20:05:31 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		g_interrupted = 0;
 
-void	sigint_handler(int sig)
+static void	sigint_interactive(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
-	if (g_interrupted)
-	{
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
-void	init_signals(void)
+static void	sigint_noninteractive(int sig)
 {
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
+	(void)sig;
+	write(1, "\n", 1);
 }
 
-void	set_default_signals_for_child(void)
+void	set_signals_interactive(void)
+{
+	struct sigaction	act;
+
+	ft_memset(&act, 0, sizeof(act));
+	act.sa_handler = sigint_interactive;
+	sigaction(SIGINT, &act, NULL);
+
+	act.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &act, NULL);
+}
+
+void	set_signals_noninteractive(void)
+{
+	struct sigaction	act;
+
+	ft_memset(&act, 0, sizeof(act));
+	act.sa_handler = sigint_noninteractive;
+	sigaction(SIGINT, &act, NULL);
+	sigaction(SIGQUIT, &act, NULL);
+}
+
+void	set_signals_child(void)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
