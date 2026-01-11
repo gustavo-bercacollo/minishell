@@ -6,28 +6,29 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 20:29:52 by klima-do          #+#    #+#             */
-/*   Updated: 2026/01/08 20:24:05 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 20:16:26 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_left_child(int fd[2], t_shell *ms, t_ast *node)
+static void	handle_left_child(int fd[2], t_shell *ms, t_ast *node)
 {
-	set_default_signals_for_child();
+	set_signals_child();
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[0]);
 	close(fd[1]);
-	exit(execute_node(ms, node->left));
+	_exit(execute_node(ms, node->left));
 }
 
-void	handle_right_child(int fd[2], t_shell *ms, t_ast *node)
+static void	handle_right_child(int fd[2], t_shell *ms, t_ast *node)
 {
-	set_default_signals_for_child();
+	set_signals_child();
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
 	close(fd[1]);
-	exit(execute_node(ms, node->right));
+
+	_exit(execute_node(ms, node->right));
 }
 
 int	execute_pipe(t_shell *ms, t_ast *node)
@@ -37,21 +38,37 @@ int	execute_pipe(t_shell *ms, t_ast *node)
 	pid_t	left_pid;
 	pid_t	right_pid;
 
+	set_signals_noninteractive();
 	if (pipe(fd) < 0)
 	{
 		perror("pipe");
+		set_signals_interactive();
 		return (1);
 	}
 	left_pid = fork();
+	if (left_pid < 0)
+	{
+		perror("fork");
+		set_signals_interactive();
+		return (1);
+	}
 	if (left_pid == 0)
 		handle_left_child(fd, ms, node);
+
 	right_pid = fork();
+	if (right_pid < 0)
+	{
+		perror("fork");
+		set_signals_interactive();
+		return (1);
+	}
 	if (right_pid == 0)
 		handle_right_child(fd, ms, node);
 	close(fd[0]);
 	close(fd[1]);
 	waitpid(left_pid, NULL, 0);
 	waitpid(right_pid, &status, 0);
+	set_signals_interactive();
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	if (WIFSIGNALED(status))

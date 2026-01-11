@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 19:43:08 by klima-do          #+#    #+#             */
-/*   Updated: 2026/01/11 18:53:52 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 20:08:13 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ int	execute_cmd(t_shell *ms, t_ast *node)
 		perror("fork");
 		return (1);
 	}
+	set_signals_noninteractive();
 	if (pid == 0)
 	{
-		set_default_signals_for_child();
+		set_signals_child();
 		if (apply_redirections(node->cmd) <0)
 			_exit (1);
 		path = get_path(ms->env, node->cmd->argv[0]);
@@ -49,6 +50,7 @@ int	execute_cmd(t_shell *ms, t_ast *node)
 		_exit(126);
 	}
 	waitpid(pid, &status, 0);
+	set_signals_interactive();
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	if (WIFSIGNALED(status))

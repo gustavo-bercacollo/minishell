@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 18:30:50 by gbercaco          #+#    #+#             */
-/*   Updated: 2026/01/11 18:54:01 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 20:11:30 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,20 @@ void	run_heredoc_child(char *delim, int write_fd)
 {
 	char	*line;
 
-	signal(SIGINT, SIG_DFL);
+	set_signals_child();
+
 	while (1)
 	{
-		line = readline("> ");
+		line = get_next_line(STDIN_FILENO);
 		if (!line)
 			_exit(0);
-		if (ft_strcmp(line, delim) == 0)
+		if (ft_strncmp(line, delim, ft_strlen(delim)) == 0
+			&& line[ft_strlen(delim)] == '\n')
 		{
 			free(line);
 			_exit(0);
 		}
 		write(write_fd, line, ft_strlen(line));
-		write(write_fd, "\n", 1);
 		free(line);
 	}
 }
@@ -75,21 +76,20 @@ int	create_heredoc(char *delim)
 	int		fd[2];
 	pid_t	pid;
 	int		status;
-	void	(*old_sigint)(int);
 
 	if (pipe(fd) == -1)
 		return (-1);
-	old_sigint = signal(SIGINT, SIG_IGN);
+
+	set_signals_noninteractive();
 	pid = fork();
 	if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
 		close(fd[0]);
 		run_heredoc_child(delim, fd[1]);
 	}
 	close(fd[1]);
 	waitpid(pid, &status, 0);
-	signal(SIGINT, old_sigint);
+	set_signals_interactive();
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	{
 		close(fd[0]);
@@ -97,6 +97,7 @@ int	create_heredoc(char *delim)
 	}
 	return (fd[0]);
 }
+
 
 void	set_heredoc(t_token **tok, t_command *cmd)
 {
@@ -115,8 +116,8 @@ void	set_heredoc(t_token **tok, t_command *cmd)
 	cmd->heredoc_fd = create_heredoc(delim->value);
 	cmd->heredoc = (cmd->heredoc_fd == -1) ? -1 : 1;
 	next = delim->next;
-	free(redir);
-	free(delim->value);
-	free(delim);
+	// free(redir);
+	// free(delim->value);
+	// free(delim);
 	*tok = next;
 }
