@@ -26,5 +26,6 @@ t_ast 	*ast_from_cmd(t_command *cmd)
 	node_cmd->left = NULL;
 	node_cmd->right = NULL;
 	node_cmd->cmd = cmd;
+	node_cmd->token = NULL;
 	return (node_cmd);
 }

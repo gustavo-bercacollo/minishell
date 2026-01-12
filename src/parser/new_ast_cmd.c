@@ -26,5 +26,6 @@ t_ast	*new_ast_node(t_node_type type, t_ast *left, t_ast *right)
 	node->left = left;
 	node->right = right;
 	node->cmd = NULL;
+	node->token = NULL;
 	return (node);
 }
