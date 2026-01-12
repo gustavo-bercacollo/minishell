@@ -6,13 +6,13 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 16:47:22 by klima-do          #+#    #+#             */
-/*   Updated: 2025/12/22 17:11:36 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 21:37:30 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_ast *parse_ast(t_token **tok)
+t_ast	*parse_ast(t_token **tok)
 {
 	if (!tok || !*tok)
 		return (NULL);

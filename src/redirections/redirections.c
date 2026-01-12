@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 20:04:11 by gbercaco          #+#    #+#             */
-/*   Updated: 2026/01/08 20:41:46 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 21:35:57 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,22 +61,6 @@ void	handle_pipe_output(int fd[2])
 	close(fd[0]);
 	close(fd[1]);
 }
-
-
-// int	apply_redirections(t_command *cmd)
-// {
-// 	if (cmd->in_fd != STDIN_FILENO)
-// 	{
-// 		dup2(cmd->in_fd, STDIN_FILENO);
-// 		close(cmd->in_fd);
-// 	}
-// 	if (cmd->out_fd != STDOUT_FILENO)
-// 	{
-// 		dup2(cmd->out_fd, STDOUT_FILENO);
-// 		close(cmd->out_fd);
-// 	}
-// 	return (0);
-// }
 
 int	apply_redirections(t_command *cmd)
 {

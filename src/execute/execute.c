@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 18:53:53 by klima-do          #+#    #+#             */
-/*   Updated: 2026/01/08 20:48:41 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 21:34:39 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,26 +52,22 @@ int	execute_builtin_with_redir(t_shell *ms, t_command *cmd)
 	return (status);
 }
 
-
 int	execute_node(t_shell *ms, t_ast *node)
 {
 	if (!node)
 		return (0);
-
 	if (node->type == NODE_CMD)
 	{
 		if (node->cmd && node->cmd->argv
-		&& is_builtin(node->cmd->argv[0]))
-			return (execute_builtin_with_redir(ms, node->cmd));
+			&& is_builtin(node->cmd->argv[0]))
+				return (execute_builtin_with_redir(ms, node->cmd));
 		return (execute_cmd(ms, node));
 	}
-
 	if (node->type == NODE_PIPE)
 		return (execute_pipe(ms, node));
 	if (node->type == NODE_AND)
 		return (execute_and(ms, node));
 	if (node->type == NODE_OR)
 		return (execute_or(ms, node));
-
 	return (0);
 }

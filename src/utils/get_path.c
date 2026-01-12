@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:18:06 by klima-do          #+#    #+#             */
-/*   Updated: 2026/01/08 16:23:49 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 21:35:15 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ char	*hash_get_value(t_hash *hash, char *key)
 	return (node->value);
 }
 
-void debug_env(t_hash *env)
+void	debug_env(t_hash *env)
 {
-	size_t i;
-	t_hash_node *n;
+	size_t		i;
+	t_hash_node	*n;
 
 	i = 0;
 	while (i < env->size)

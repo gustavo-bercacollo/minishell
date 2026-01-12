@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 20:29:52 by klima-do          #+#    #+#             */
-/*   Updated: 2026/01/11 20:16:26 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 22:20:12 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void	handle_right_child(int fd[2], t_shell *ms, t_ast *node)
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
 	close(fd[1]);
-
 	_exit(execute_node(ms, node->right));
 }
 
@@ -54,7 +53,6 @@ int	execute_pipe(t_shell *ms, t_ast *node)
 	}
 	if (left_pid == 0)
 		handle_left_child(fd, ms, node);
-
 	right_pid = fork();
 	if (right_pid < 0)
 	{

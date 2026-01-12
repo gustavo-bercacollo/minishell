@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 18:53:53 by klima-do          #+#    #+#             */
-/*   Updated: 2026/01/08 16:03:37 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 22:20:31 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,17 @@ t_hash	*env_hash_init(char **env)
 		{
 			key = ft_substr(env[i], 0, position - env[i]);
 			value = ft_strdup(position + 1);
-			hash_set(hash, key, value);
+			if (key && value)
+			{
+				hash_set(hash, key, value);
+				free(key);
+				free(value);
+			}
+			else
+			{
+				free(key);
+				free(value);
+			}
 		}
 		i++;
 	}

@@ -6,13 +6,13 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 15:51:39 by klima-do          #+#    #+#             */
-/*   Updated: 2025/12/18 15:55:38 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 23:01:15 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_ast *ast_from_cmd(t_command *cmd)
+t_ast 	*ast_from_cmd(t_command *cmd)
 {
 	t_ast	*node_cmd;
 

@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 15:13:42 by klima-do          #+#    #+#             */
-/*   Updated: 2026/01/08 17:41:26 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 21:39:19 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,9 @@ char	*ft_split3(const char *s1, const char *s2, const char *s3)
 
 	if (!s1 || !s2 || !s3)
 		return (NULL);
-
 	res = malloc(ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3) + 1);
 	if (!res)
 		return (NULL);
-
 	i = 0;
 	j = 0;
 	while (s1[j])
@@ -36,14 +34,14 @@ char	*ft_split3(const char *s1, const char *s2, const char *s3)
 	while (s3[j])
 		res[i++] = s3[j++];
 	res[i] = '\0';
-
 	return (res);
 }
 
-
 void	free_envp(char **envp)
 {
-	size_t i = 0;
+	size_t	i;
+	 
+	i = 0;
 	while (envp[i])
 		free(envp[i++]);
 	free(envp);
@@ -58,11 +56,9 @@ char	**hash_to_envp(t_hash *hash)
 
 	if (!hash)
 		return (NULL);
-
 	envp = malloc(sizeof(char *) * (hash->count + 1));
 	if (!envp)
 		return (NULL);
-
 	i = 0;
 	b = 0;
 	while (b < hash->size)

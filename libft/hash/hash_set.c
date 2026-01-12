@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 19:14:28 by klima-do          #+#    #+#             */
-/*   Updated: 2025/12/27 20:19:45 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 22:32:37 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	hash_set(t_hash *hash, char *key, char *value)
 	unsigned int	index;
 	t_hash_node		*current;
 	t_hash_node		*new;
+
 	index = hash_func(key, hash->size);
 	current = hash->buckets[index];
 	while (current)

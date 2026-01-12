@@ -6,12 +6,11 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 19:15:45 by gbercaco          #+#    #+#             */
-/*   Updated: 2026/01/11 20:05:31 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 21:35:47 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 static void	sigint_interactive(int sig)
 {
@@ -35,7 +34,6 @@ void	set_signals_interactive(void)
 	ft_memset(&act, 0, sizeof(act));
 	act.sa_handler = sigint_interactive;
 	sigaction(SIGINT, &act, NULL);
-
 	act.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &act, NULL);
 }

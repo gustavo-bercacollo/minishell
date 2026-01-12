@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_expansions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 16:17:53 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/10 17:39:12 by gbercaco         ###   ########.fr       */
+/*   Updated: 2026/01/11 22:19:45 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ char	*process_arg(char *arg)
 
 char	*get_variable_value(t_shell *ms, char *var_name)
 {
-	char	*value;
+	t_hash_node	*node;
 
 	if (ft_strcmp(var_name, "?") == 0)
 		return (ft_itoa(ms->last_status));
-	value = getenv(var_name);
-	if (!value)
+	node = hash_get(ms->env, var_name);
+	if (!node || !node->value)
 		return (ft_strdup(""));
-	return (ft_strdup(value));
+	return (ft_strdup(node->value));
 }
 
 char	*replace_var_in_arg(char *arg, char *var_name, char *value)
@@ -99,6 +99,5 @@ char	*expand_variable_in_arg(t_shell *ms, char *arg, char *var_name)
 	new_arg = replace_var_in_arg(arg, var_name, value);
 	free(value);
 	free(var_name);
-	free(arg);
 	return (new_arg);
 }

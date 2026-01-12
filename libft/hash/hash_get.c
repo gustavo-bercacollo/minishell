@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 20:21:19 by klima-do          #+#    #+#             */
-/*   Updated: 2025/12/27 20:26:16 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 21:30:24 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_hash_node	*hash_get(t_hash *hash, char *key)
 		return (NULL);
 	index = hash_func(key, hash->size);
 	current = hash->buckets[index];
-	while(current)
+	while (current)
 	{
 		if (ft_strcmp(current->key, key) == 0)
 			return (current);

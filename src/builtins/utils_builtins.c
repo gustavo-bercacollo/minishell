@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 14:24:27 by gbercaco          #+#    #+#             */
-/*   Updated: 2026/01/08 18:27:14 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 21:31:29 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	execute_builtin(t_shell *ms, t_command *cmd)
 	}
 	else if (!ft_strcmp(cmd->argv[0], "env"))
 		return (biultin_env(ms->env));
-
 	else if (!ft_strcmp(cmd->argv[0], "exit"))
 		return (builtin_exit(ms, cmd->argv));
 	return (1);

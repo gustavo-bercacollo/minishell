@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 16:02:03 by gbercaco          #+#    #+#             */
-/*   Updated: 2025/12/22 20:16:06 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 21:35:35 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	free_token(t_token *token)
 {
 	if (!token)
-		return;
+		return ;
 	if (token->value)
 		free(token->value);
 	free(token);

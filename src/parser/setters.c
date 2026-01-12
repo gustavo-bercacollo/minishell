@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 18:30:50 by gbercaco          #+#    #+#             */
-/*   Updated: 2026/01/11 20:11:30 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 21:36:46 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	run_heredoc_child(char *delim, int write_fd)
 	char	*line;
 
 	set_signals_child();
-
 	while (1)
 	{
 		line = get_next_line(STDIN_FILENO);
@@ -79,7 +78,6 @@ int	create_heredoc(char *delim)
 
 	if (pipe(fd) == -1)
 		return (-1);
-
 	set_signals_noninteractive();
 	pid = fork();
 	if (pid == 0)
@@ -98,7 +96,6 @@ int	create_heredoc(char *delim)
 	return (fd[0]);
 }
 
-
 void	set_heredoc(t_token **tok, t_command *cmd)
 {
 	t_token	*redir;
@@ -116,8 +113,5 @@ void	set_heredoc(t_token **tok, t_command *cmd)
 	cmd->heredoc_fd = create_heredoc(delim->value);
 	cmd->heredoc = (cmd->heredoc_fd == -1) ? -1 : 1;
 	next = delim->next;
-	// free(redir);
-	// free(delim->value);
-	// free(delim);
 	*tok = next;
 }

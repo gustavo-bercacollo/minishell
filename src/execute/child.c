@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 18:53:53 by klima-do          #+#    #+#             */
-/*   Updated: 2026/01/08 15:34:08 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 22:20:26 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,14 @@ void	run_child(t_shell *ms, t_command *cmd, int fd_in, int fd[2])
 		_exit(127);
 	}
 	envp = hash_to_envp(ms->env);
+	if (!envp)
+	{
+		free(path);
+		_exit(1);
+	}
 	execve(path, cmd->argv, envp);
 	perror("execve");
 	free_envp(envp);
+	free(path);
 	_exit(1);
 }

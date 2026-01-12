@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:47:09 by klima-do          #+#    #+#             */
-/*   Updated: 2025/12/22 20:39:22 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 21:37:20 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_command	*parse_cmd(t_token **tok)
 {
 	t_command	*cmd;
-	t_token 	*tmp;
+	t_token		*tmp;
 	int			consumed;
 
 	cmd = new_command();
@@ -26,7 +26,6 @@ t_command	*parse_cmd(t_token **tok)
 	{
 		if ((*tok)->type == TOK_WORD)
 		{
-
 			tmp = *tok;
 			add_arg(cmd, tmp);
 			*tok = (*tok)->next;

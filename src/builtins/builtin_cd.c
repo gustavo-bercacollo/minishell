@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 17:53:36 by klima-do          #+#    #+#             */
-/*   Updated: 2026/01/08 18:23:23 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 23:01:31 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,23 @@ int	cd_error(const char *msg)
 	return (1);
 }
 
-
 void	env_set(t_hash *env, const char *key, const char *value)
 {
 	char	*k;
 	char	*v;
 
 	if (!env || !key || !value)
-		return;
+		return ;
 	k = ft_strdup(key);
 	v = ft_strdup(value);
 	if (!k || !v)
 	{
 		free(k);
 		free(v);
-		return;
+		return ;
 	}
 	hash_set(env, k, v);
 }
-
 
 int	builtin_cd(t_shell *ms, char **argv)
 {

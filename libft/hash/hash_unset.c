@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 20:28:01 by klima-do          #+#    #+#             */
-/*   Updated: 2026/01/06 15:48:32 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 21:30:47 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	hash_unset(t_hash *hash, char *key)
 	while (current)
 	{
 		if (ft_strcmp(current->key, key) == 0)
-			break;
+			break ;
 		prev = current;
 		current = current->next;
 	}

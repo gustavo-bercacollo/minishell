@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 16:30:09 by klima-do          #+#    #+#             */
-/*   Updated: 2025/12/22 20:25:28 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 21:37:38 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 t_ast	*parser_and_or(t_token **tok)
 {
-	t_ast	*left;
-	t_ast	*right;
+	t_ast		*left;
+	t_ast		*right;
 	t_toktype	op;
 	t_token		*op_tok;
 

@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 19:43:08 by klima-do          #+#    #+#             */
-/*   Updated: 2026/01/11 20:08:13 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/11 21:34:44 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	execute_cmd(t_shell *ms, t_ast *node)
 	int		status;
 	char	**envp;
 	char	*path;
-	
+
 	pid = fork();
 	if (pid < 0)
 	{
@@ -29,8 +29,8 @@ int	execute_cmd(t_shell *ms, t_ast *node)
 	if (pid == 0)
 	{
 		set_signals_child();
-		if (apply_redirections(node->cmd) <0)
-			_exit (1);
+		if (apply_redirections(node->cmd) < 0)
+			_exit(1);
 		path = get_path(ms->env, node->cmd->argv[0]);
 		if (!path)
 		{
@@ -41,11 +41,13 @@ int	execute_cmd(t_shell *ms, t_ast *node)
 		envp = hash_to_envp(ms->env);
 		if (!envp)
 		{
+			free(path);
 			perror("env");
 			_exit(1);
-		}	
+		}
 		execve(path, node->cmd->argv, envp);
 		free_envp(envp);
+		free(path);
 		perror("execve");
 		_exit(126);
 	}
