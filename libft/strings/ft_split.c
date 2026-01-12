@@ -33,13 +33,13 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	while (i < w_count)
 	{
-	w_len = split_fill(result_array, s, c, i);
+		w_len = split_fill(result_array, s, c, i);
 		if (!result_array)
 			return (ft_free_split(result_array));
 		while (*s && *s == c)
 			s++;
-	s = s + w_len;
-	i++;
+		s = s + w_len;
+		i++;
 	}
 	result_array[i] = (NULL);
 	return (result_array);

@@ -56,13 +56,44 @@ void	debug_env(t_hash *env)
 	}
 }
 
+static char	*check_path_in_dir(char *dir, char *cmd)
+{
+	char	*tmp;
+	char	*path;
+
+	tmp = ft_strjoin(dir, "/");
+	path = ft_strjoin(tmp, cmd);
+	free(tmp);
+	if (access(path, X_OK) == 0)
+		return (path);
+	free(path);
+	return (NULL);
+}
+
+static char	*search_in_dirs(char **dirs, char *cmd)
+{
+	char	*path;
+	int		i;
+
+	i = 0;
+	while (dirs[i])
+	{
+		path = check_path_in_dir(dirs[i], cmd);
+		if (path)
+		{
+			ft_free_split(dirs);
+			return (path);
+		}
+		i++;
+	}
+	ft_free_split(dirs);
+	return (NULL);
+}
+
 char	*get_path(t_hash *env, char *cmd)
 {
 	char	*path_env;
 	char	**dirs;
-	char	*path;
-	char	*tmp;
-	int		i;
 
 	if (!cmd || ft_strchr(cmd, '/'))
 	{
@@ -76,20 +107,5 @@ char	*get_path(t_hash *env, char *cmd)
 	dirs = ft_split(path_env, ':');
 	if (!dirs)
 		return (NULL);
-	i = 0;
-	while (dirs[i])
-	{
-		tmp = ft_strjoin(dirs[i], "/");
-		path = ft_strjoin(tmp, cmd);
-		free(tmp);
-		if (access(path, X_OK) == 0)
-		{
-			ft_free_split(dirs);
-			return (path);
-		}
-		free(path);
-		i++;
-	}
-	ft_free_split(dirs);
-	return (NULL);
+	return (search_in_dirs(dirs, cmd));
 }

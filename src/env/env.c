@@ -12,12 +12,33 @@
 
 #include "../../include/minishell.h"
 
-t_hash	*env_hash_init(char **env)
+static void	add_env_variable(t_hash *hash, char *env_str)
 {
-	t_hash	*hash;
 	char	*key;
 	char	*value;
 	char	*position;
+
+	position = ft_strchr(env_str, '=');
+	if (!position)
+		return ;
+	key = ft_substr(env_str, 0, position - env_str);
+	value = ft_strdup(position + 1);
+	if (key && value)
+	{
+		hash_set(hash, key, value);
+		free(key);
+		free(value);
+	}
+	else
+	{
+		free(key);
+		free(value);
+	}
+}
+
+t_hash	*env_hash_init(char **env)
+{
+	t_hash	*hash;
 	int		i;
 
 	hash = hash_create(128);
@@ -26,23 +47,7 @@ t_hash	*env_hash_init(char **env)
 	i = 0;
 	while (env[i])
 	{
-		position = ft_strchr(env[i], '=');
-		if (position)
-		{
-			key = ft_substr(env[i], 0, position - env[i]);
-			value = ft_strdup(position + 1);
-			if (key && value)
-			{
-				hash_set(hash, key, value);
-				free(key);
-				free(value);
-			}
-			else
-			{
-				free(key);
-				free(value);
-			}
-		}
+		add_env_variable(hash, env[i]);
 		i++;
 	}
 	return (hash);

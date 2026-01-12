@@ -12,11 +12,28 @@
 
 #include "minishell.h"
 
+static void	expand_argument(t_shell *ms, t_command *cmd, int i)
+{
+	char	*var_name;
+	char	*new_arg;
+
+	var_name = process_arg(cmd->argv[i]);
+	if (var_name && ft_strlen(var_name) > 0)
+	{
+		new_arg = expand_variable_in_arg(ms, cmd->argv[i], var_name);
+		if (new_arg)
+		{
+			free(cmd->argv[i]);
+			cmd->argv[i] = new_arg;
+		}
+	}
+	else if (var_name)
+		free(var_name);
+}
+
 void	expand_cmd(t_shell *ms, t_command *cmd)
 {
 	int		i;
-	char	*var_name;
-	char	*new_arg;
 
 	if (!cmd || !cmd->argv)
 		return ;
@@ -24,21 +41,7 @@ void	expand_cmd(t_shell *ms, t_command *cmd)
 	while (cmd->argv[i])
 	{
 		if (cmd->quoted && cmd->quoted[i] != 1)
-		{
-			var_name = process_arg(cmd->argv[i]);
-			if (var_name && ft_strlen(var_name) > 0)
-			{
-				new_arg = expand_variable_in_arg(
-						ms, cmd->argv[i], var_name);
-				if (new_arg)
-				{
-					free(cmd->argv[i]);
-					cmd->argv[i] = new_arg;
-				}
-			}
-			else if (var_name)
-				free(var_name);
-		}
+			expand_argument(ms, cmd, i);
 		i++;
 	}
 }

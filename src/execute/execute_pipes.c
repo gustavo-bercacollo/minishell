@@ -30,6 +30,37 @@ static void	handle_right_child(int fd[2], t_shell *ms, t_ast *node)
 	_exit(execute_node(ms, node->right));
 }
 
+static int	create_pipe_and_forks(int fd[2], pid_t *left, pid_t *r)
+{
+	(void)r;
+	if (pipe(fd) < 0)
+	{
+		perror("pipe");
+		set_signals_interactive();
+		return (1);
+	}
+	*left = fork();
+	if (*left < 0)
+	{
+		perror("fork");
+		set_signals_interactive();
+		return (1);
+	}
+	return (0);
+}
+
+static int	fork_right_child(pid_t *right_pid)
+{
+	*right_pid = fork();
+	if (*right_pid < 0)
+	{
+		perror("fork");
+		set_signals_interactive();
+		return (1);
+	}
+	return (0);
+}
+
 int	execute_pipe(t_shell *ms, t_ast *node)
 {
 	int		status;
@@ -38,28 +69,12 @@ int	execute_pipe(t_shell *ms, t_ast *node)
 	pid_t	right_pid;
 
 	set_signals_noninteractive();
-	if (pipe(fd) < 0)
-	{
-		perror("pipe");
-		set_signals_interactive();
+	if (create_pipe_and_forks(fd, &left_pid, &right_pid))
 		return (1);
-	}
-	left_pid = fork();
-	if (left_pid < 0)
-	{
-		perror("fork");
-		set_signals_interactive();
-		return (1);
-	}
 	if (left_pid == 0)
 		handle_left_child(fd, ms, node);
-	right_pid = fork();
-	if (right_pid < 0)
-	{
-		perror("fork");
-		set_signals_interactive();
+	if (fork_right_child(&right_pid))
 		return (1);
-	}
 	if (right_pid == 0)
 		handle_right_child(fd, ms, node);
 	close(fd[0]);

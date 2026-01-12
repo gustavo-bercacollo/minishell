@@ -115,7 +115,10 @@ void	set_heredoc(t_token **tok, t_command *cmd)
 		return ;
 	}
 	cmd->heredoc_fd = create_heredoc(delim->value);
-	cmd->heredoc = (cmd->heredoc_fd == -1) ? -1 : 1;
+	if (cmd->heredoc_fd == -1)
+		cmd->heredoc = -1;
+	else
+		cmd->heredoc = 1;
 	next = delim->next;
 	*tok = next;
 	free_token(redir);

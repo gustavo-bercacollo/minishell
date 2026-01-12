@@ -40,17 +40,26 @@ char	*ft_split3(const char *s1, const char *s2, const char *s3)
 void	free_envp(char **envp)
 {
 	size_t	i;
-	 
+
 	i = 0;
 	while (envp[i])
 		free(envp[i++]);
 	free(envp);
 }
 
+static void	fill_envp_bucket(char **envp, size_t *i, t_hash_node *node)
+{
+	while (node)
+	{
+		if (node->value)
+			envp[(*i)++] = ft_split3(node->key, "=", node->value);
+		node = node->next;
+	}
+}
+
 char	**hash_to_envp(t_hash *hash)
 {
 	char		**envp;
-	t_hash_node	*node;
 	size_t		i;
 	size_t		b;
 
@@ -63,13 +72,7 @@ char	**hash_to_envp(t_hash *hash)
 	b = 0;
 	while (b < hash->size)
 	{
-		node = hash->buckets[b];
-		while (node)
-		{
-			if (node->value)
-				envp[i++] = ft_split3(node->key, "=", node->value);
-			node = node->next;
-		}
+		fill_envp_bucket(envp, &i, hash->buckets[b]);
 		b++;
 	}
 	envp[i] = NULL;

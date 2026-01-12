@@ -55,15 +55,12 @@ t_token	*read_word(char **s)
 	return (tok);
 }
 
-t_token	*read_quotes(char **s)
+static char	*extract_quoted_word(char **s, char quote, int *error)
 {
-	char	quote;
 	char	*start;
 	int		len;
 	char	*word;
-	t_token	*tok;
 
-	quote = **s;
 	(*s)++;
 	start = *s;
 	len = 0;
@@ -72,12 +69,26 @@ t_token	*read_quotes(char **s)
 	if (!(*s)[len])
 	{
 		ft_putendl_fd("minishell: syntax error: unclosed quote", 2);
+		*error = 1;
 		return (NULL);
 	}
 	word = ft_strndup(start, len);
-	if (!word)
-		return (NULL);
 	*s += len + 1;
+	return (word);
+}
+
+t_token	*read_quotes(char **s)
+{
+	char	quote;
+	char	*word;
+	t_token	*tok;
+	int		error;
+
+	quote = **s;
+	error = 0;
+	word = extract_quoted_word(s, quote, &error);
+	if (error || !word)
+		return (NULL);
 	tok = new_token(word, TOK_WORD);
 	if (!tok)
 	{

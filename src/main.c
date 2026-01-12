@@ -12,6 +12,31 @@
 
 #include "minishell.h"
 
+static void	cleanup_loop(char **line, t_token **tokens, t_ast **ast)
+{
+	free_tokens(tokens);
+	free_ast(*ast);
+	free(*line);
+	*tokens = NULL;
+	*ast = NULL;
+}
+
+static int	process_line(char **line, t_token **tokens,
+		t_ast **ast, t_shell *ms)
+{
+	*tokens = tokenize(*line);
+	*ast = parse_ast(tokens);
+	expand_ast(ms, *ast);
+	if (*ast)
+		ms->last_status = execute_node(ms, *ast);
+	if (ms->should_exit)
+	{
+		cleanup_loop(line, tokens, ast);
+		return (1);
+	}
+	return (0);
+}
+
 void	init_shell(char **line, t_token **tokens, t_ast **ast, t_shell *ms)
 {
 	while (1)
@@ -22,23 +47,9 @@ void	init_shell(char **line, t_token **tokens, t_ast **ast, t_shell *ms)
 			break ;
 		if (**line)
 			add_history(*line);
-		*tokens = tokenize(*line);
-		*ast = parse_ast(tokens);
-		expand_ast(ms, *ast);
-		if (*ast)
-			ms->last_status = execute_node(ms, *ast);
-		if (ms->should_exit)
-		{
-			free_tokens(tokens);
-			free_ast(*ast);
-			free(*line);
+		if (process_line(line, tokens, ast, ms))
 			break ;
-		}
-		free_tokens(tokens);
-		free_ast(*ast);
-		free(*line);
-		*tokens = NULL;
-		*ast = NULL;
+		cleanup_loop(line, tokens, ast);
 	}
 }
 

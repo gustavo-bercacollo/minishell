@@ -61,7 +61,7 @@ static char	*extract_line(char	*storage)
 	while (storage[index] && storage[index] != '\n')
 		index++;
 	line = ft_calloc(index + 2, sizeof(char));
-		index = 0;
+	index = 0;
 	while (storage[index] && storage[index] != '\n')
 	{
 		line[index] = storage[index];

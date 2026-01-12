@@ -12,6 +12,14 @@
 
 #include "minishell.h"
 
+static t_ast	*create_and_or_node(t_ast *left, t_ast *right, t_toktype op)
+{
+	if (op == TOK_AND)
+		return (new_ast_node(NODE_AND, left, right));
+	else
+		return (new_ast_node(NODE_OR, left, right));
+}
+
 t_ast	*parser_and_or(t_token **tok)
 {
 	t_ast		*left;
@@ -34,10 +42,7 @@ t_ast	*parser_and_or(t_token **tok)
 			free_ast(left);
 			return (NULL);
 		}
-		if (op == TOK_AND)
-			left = new_ast_node(NODE_AND, left, right);
-		else
-			left = new_ast_node(NODE_OR, left, right);
+		left = create_and_or_node(left, right, op);
 	}
 	return (left);
 }

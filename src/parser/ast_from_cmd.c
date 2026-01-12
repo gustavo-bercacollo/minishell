@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-t_ast 	*ast_from_cmd(t_command *cmd)
+t_ast	*ast_from_cmd(t_command *cmd)
 {
 	t_ast	*node_cmd;
 

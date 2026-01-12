@@ -63,17 +63,12 @@ static int	compare_nodes(const void *a, const void *b)
 	return (ft_strcmp(node_a->key, node_b->key));
 }
 
-static void	print_export_sorted(t_hash *hash)
+static void	collect_nodes(t_hash *hash, t_hash_node **nodes)
 {
-	t_hash_node	**nodes;
 	size_t		count;
-	size_t		i;
 	size_t		b;
 	t_hash_node	*node;
 
-	nodes = malloc(sizeof(t_hash_node *) * (hash->count + 1));
-	if (!nodes)
-		return ;
 	count = 0;
 	b = 0;
 	while (b < hash->size)
@@ -87,9 +82,20 @@ static void	print_export_sorted(t_hash *hash)
 		b++;
 	}
 	nodes[count] = NULL;
-	qsort(nodes, count, sizeof(t_hash_node *), compare_nodes);
+}
+
+static void	print_export_sorted(t_hash *hash)
+{
+	t_hash_node	**nodes;
+	size_t		i;
+
+	nodes = malloc(sizeof(t_hash_node *) * (hash->count + 1));
+	if (!nodes)
+		return ;
+	collect_nodes(hash, nodes);
+	qsort(nodes, hash->count, sizeof(t_hash_node *), compare_nodes);
 	i = 0;
-	while (i < count)
+	while (i < hash->count)
 	{
 		printf("declare -x %s=\"%s\"\n", nodes[i]->key, nodes[i]->value);
 		i++;

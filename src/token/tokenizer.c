@@ -34,6 +34,29 @@ t_token	*read_or(char **cmd)
 	return (tok);
 }
 
+static t_token	*get_token_type(char **comand)
+{
+	if (**comand == '&' && *(*comand + 1) == '&')
+		return (read_and(comand));
+	else if (**comand == '|' && *(*comand + 1) == '|')
+		return (read_or(comand));
+	else if (**comand == '|' || **comand == '<' || **comand == '>')
+		return (read_operator(comand));
+	else if (**comand == '"' || **comand == '\'')
+		return (read_quotes(comand));
+	else
+		return (read_word(comand));
+}
+
+static void	add_token_to_list(t_token **head, t_token **tail, t_token *tok)
+{
+	if (!*head)
+		*head = tok;
+	else
+		(*tail)->next = tok;
+	*tail = tok;
+}
+
 t_token	*tokenize(char *comand)
 {
 	t_token	*head;
@@ -47,26 +70,13 @@ t_token	*tokenize(char *comand)
 		skip_spaces(&comand);
 		if (!*comand)
 			break ;
-		if (*comand == '&' && *(comand + 1) == '&')
-			tok = read_and(&comand);
-		else if (*comand == '|' && *(comand + 1) == '|')
-			tok = read_or(&comand);
-		else if (*comand == '|' || *comand == '<' || *comand == '>')
-			tok = read_operator(&comand);
-		else if (*comand == '"' || *comand == '\'')
-			tok = read_quotes(&comand);
-		else
-			tok = read_word(&comand);
+		tok = get_token_type(&comand);
 		if (!tok)
 		{
 			free_tokens(&head);
 			return (NULL);
 		}
-		if (!head)
-			head = tok;
-		else
-			tail->next = tok;
-		tail = tok;
+		add_token_to_list(&head, &tail, tok);
 	}
 	return (head);
 }

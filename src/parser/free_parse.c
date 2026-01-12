@@ -37,7 +37,7 @@ void	free_command(t_command *cmd)
 void	free_ast(t_ast *node)
 {
 	if (!node)
-		return;
+		return ;
 	free_ast(node->left);
 	free_ast(node->right);
 	if (node->token)
@@ -46,4 +46,3 @@ void	free_ast(t_ast *node)
 		free_command(node->cmd);
 	free(node);
 }
-
