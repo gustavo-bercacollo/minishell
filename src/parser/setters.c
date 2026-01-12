@@ -29,6 +29,8 @@ void	set_outfile(t_token **tok, t_command *cmd)
 		free(cmd->outfile);
 	cmd->outfile = ft_strdup(file->value);
 	*tok = file->next;
+	free_token(redir);
+	free_token(file);
 }
 
 void	set_infile(t_token **tok, t_command *cmd)
@@ -47,6 +49,8 @@ void	set_infile(t_token **tok, t_command *cmd)
 		free(cmd->infile);
 	cmd->infile = ft_strdup(file->value);
 	*tok = file->next;
+	free_token(redir);
+	free_token(file);
 }
 
 void	run_heredoc_child(char *delim, int write_fd)
@@ -114,4 +118,6 @@ void	set_heredoc(t_token **tok, t_command *cmd)
 	cmd->heredoc = (cmd->heredoc_fd == -1) ? -1 : 1;
 	next = delim->next;
 	*tok = next;
+	free_token(redir);
+	free_token(delim);
 }
