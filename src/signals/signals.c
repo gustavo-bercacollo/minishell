@@ -36,6 +36,7 @@ void	set_signals_interactive(void)
 	sigaction(SIGINT, &act, NULL);
 	act.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &act, NULL);
+	sigaction(SIGTSTP, &act, NULL);
 }
 
 void	set_signals_noninteractive(void)
@@ -46,6 +47,8 @@ void	set_signals_noninteractive(void)
 	act.sa_handler = sigint_noninteractive;
 	sigaction(SIGINT, &act, NULL);
 	sigaction(SIGQUIT, &act, NULL);
+	act.sa_handler = SIG_IGN;
+	sigaction(SIGTSTP, &act, NULL);
 }
 
 void	set_signals_child(void)
