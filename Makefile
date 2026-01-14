@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+         #
+#    By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/17 15:37:39 by klima-do          #+#    #+#              #
-#    Updated: 2026/01/08 18:35:57 by klima-do         ###   ########.fr        #
+#    Updated: 2026/01/14 18:40:09 by gbercaco         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I include -I libft
 LDFLAGS = -L libft -lft
+LOGS = valgrind.log norminette.log
 
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -22,6 +23,9 @@ LIBFT = $(LIBFT_DIR)/libft.a
 SRCS = src/main.c \
 	src/utils/get_prompt_path.c \
 	src/utils/get_path.c \
+	src/utils/path_search.c \
+	src/utils/env_utils.c \
+	src/utils/hash_utils.c \
 	src/token/tokenizer.c \
 	src/token/utils_tokenizer.c \
 	src/token/read_operators.c \
@@ -35,6 +39,9 @@ SRCS = src/main.c \
 	src/execute/parent.c \
 	src/execute/utils_envp_hash.c \
 	src/redirections/redirections.c \
+	src/redirections/redir_in.c  \
+	src/redirections/redir_out.c  \
+	src/redirections/redir_pipe.c  \
 	src/expansions/expansions.c \
 	src/expansions/utils_expansions.c \
 	src/signals/signals.c \
@@ -57,8 +64,9 @@ SRCS = src/main.c \
 	src/builtins/builtin_pwd.c \
 	src/builtins/builtin_unset.c \
 	src/builtins/utils_builtins.c \
-	src/builtins/builtin_export.c
-	
+	src/builtins/builtin_export.c \
+	src/builtins/builtin_export_utils.c
+
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
@@ -73,17 +81,26 @@ $(LIBFT):
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	@rm -f $(OBJS)
 	@$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME) $(LOGS)
 	@$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
 valgrind: $(NAME)
-	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes --log-file=valgrind.log --trace-children=yes -s --suppressions=readline.supp ./$(NAME)
+	@valgrind \
+	--leak-check=full \
+	--show-leak-kinds=all \
+	--track-origins=yes \
+	--track-fds=yes \
+	--trace-children=yes \
+	--log-file=valgrind.log \
+	--suppressions=readline.supp \
+	./$(NAME) || true
+
 
 norminette:
 	@norminette ./src > ./norminette.log || true

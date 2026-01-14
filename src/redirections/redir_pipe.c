@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirections.c                                     :+:      :+:    :+:   */
+/*   redir_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/27 20:04:11 by gbercaco          #+#    #+#             */
-/*   Updated: 2026/01/14 17:23:53 by gbercaco         ###   ########.fr       */
+/*   Created: 2026/01/14 17:20:11 by gbercaco          #+#    #+#             */
+/*   Updated: 2026/01/14 17:21:00 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	apply_redirections(t_command *cmd)
+void	handle_pipe_input(int fd_in)
 {
-	if (cmd->heredoc_fd >= 0)
-		handle_heredoc(cmd);
-	if (cmd->infile)
-		handle_infile(cmd);
-	if (cmd->outfile)
-		handle_outfile(cmd);
-	return (0);
+	dup2(fd_in, STDIN_FILENO);
+	close(fd_in);
+}
+
+void	handle_pipe_output(int fd[2])
+{
+	dup2(fd[1], STDOUT_FILENO);
+	close(fd[0]);
+	close(fd[1]);
 }
