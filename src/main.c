@@ -6,7 +6,7 @@
 /*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 18:45:06 by gbercaco          #+#    #+#             */
-/*   Updated: 2026/01/11 22:41:18 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/14 18:11:41 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,5 @@ int	main(int argc, char **argv, char **envp)
 	init_shell(&line, &tokens, &ast, &ms);
 	clear_history();
 	free_hash(ms.env);
-	return (0);
+	return (ms.exit_status);
 }
