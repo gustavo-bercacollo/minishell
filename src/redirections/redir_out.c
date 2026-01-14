@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirections.c                                     :+:      :+:    :+:   */
+/*   redir_out.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/27 20:04:11 by gbercaco          #+#    #+#             */
-/*   Updated: 2026/01/14 17:23:53 by gbercaco         ###   ########.fr       */
+/*   Created: 2026/01/14 17:19:47 by gbercaco          #+#    #+#             */
+/*   Updated: 2026/01/14 17:20:01 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	apply_redirections(t_command *cmd)
+void	handle_outfile(t_command *cmd)
 {
-	if (cmd->heredoc_fd >= 0)
-		handle_heredoc(cmd);
-	if (cmd->infile)
-		handle_infile(cmd);
-	if (cmd->outfile)
-		handle_outfile(cmd);
-	return (0);
+	int	fd_out;
+
+	if (cmd->append)
+		fd_out = open(cmd->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else
+		fd_out = open(cmd->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd_out < 0)
+	{
+		perror(cmd->outfile);
+		exit(1);
+	}
+	dup2(fd_out, STDOUT_FILENO);
+	close(fd_out);
 }

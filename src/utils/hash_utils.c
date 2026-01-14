@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirections.c                                     :+:      :+:    :+:   */
+/*   hash_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/27 20:04:11 by gbercaco          #+#    #+#             */
-/*   Updated: 2026/01/14 17:23:53 by gbercaco         ###   ########.fr       */
+/*   Created: 2026/01/14 18:07:04 by gbercaco          #+#    #+#             */
+/*   Updated: 2026/01/14 18:07:22 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	apply_redirections(t_command *cmd)
+char	*hash_get_value(t_hash *hash, char *key)
 {
-	if (cmd->heredoc_fd >= 0)
-		handle_heredoc(cmd);
-	if (cmd->infile)
-		handle_infile(cmd);
-	if (cmd->outfile)
-		handle_outfile(cmd);
-	return (0);
+	t_hash_node	*node;
+
+	node = hash_get(hash, key);
+	if (!node)
+		return (NULL);
+	return (node->value);
 }
