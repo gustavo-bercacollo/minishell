@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
+/*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 00:00:00 by klima-do          #+#    #+#             */
-/*   Updated: 2026/01/14 18:20:04 by gbercaco         ###   ########.fr       */
+/*   Updated: 2026/01/14 19:47:25 by klima-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,13 +179,13 @@ void		free_command(t_command *cmd);
 void		free_token(t_token *token);
 char		*get_path_prompt(void);
 char		*get_path(t_hash *env, char *cmd);
-int	compare_nodes(const void *a, const void *b);
-void	collect_nodes(t_hash *hash, t_hash_node **nodes);
-void	print_export_sorted(t_hash *hash);
-char	*search_in_dirs(char **dirs, char *cmd);
-char	*check_path_in_dir(char *dir, char *cmd);
-char	*hash_get_value(t_hash *hash, char *key);
-char	*find_env_path(char **envp);
-void	debug_env(t_hash *env);
+int			compare_nodes(const void *a, const void *b);
+void		collect_nodes(t_hash *hash, t_hash_node **nodes);
+void		print_export_sorted(t_hash *hash);
+char		*search_in_dirs(char **dirs, char *cmd);
+char		*check_path_in_dir(char *dir, char *cmd);
+char		*hash_get_value(t_hash *hash, char *key);
+char		*find_env_path(char **envp);
+void		debug_env(t_hash *env);
 
 #endif
