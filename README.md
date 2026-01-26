@@ -1,4 +1,4 @@
-*This project has been created as part of the 42 curriculum by klima-do.*
+*This project has been created as part of the 42 curriculum by gbercaco and klima-do.*
 
 ![Minishell Banner](src/assets/banner.png)
 
