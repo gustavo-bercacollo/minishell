@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 00:00:00 by klima-do          #+#    #+#             */
-/*   Updated: 2026/01/14 19:47:25 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/26 18:55:32 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+#define GREEN       "\033[32m"
+#define DARK_GREEN  "\033[32;2m"
+#define RESET       "\033[0m"
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -187,5 +191,6 @@ char		*check_path_in_dir(char *dir, char *cmd);
 char		*hash_get_value(t_hash *hash, char *key);
 char		*find_env_path(char **envp);
 void		debug_env(t_hash *env);
+void		print_banner(void);
 
 #endif

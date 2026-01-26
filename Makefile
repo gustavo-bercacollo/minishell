@@ -6,7 +6,7 @@
 #    By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/17 15:37:39 by klima-do          #+#    #+#              #
-#    Updated: 2026/01/14 18:40:09 by gbercaco         ###   ########.fr        #
+#    Updated: 2026/01/26 18:48:26 by gbercaco         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRCS = src/main.c \
 	src/utils/path_search.c \
 	src/utils/env_utils.c \
 	src/utils/hash_utils.c \
+	src/utils/banner.c \
 	src/token/tokenizer.c \
 	src/token/utils_tokenizer.c \
 	src/token/read_operators.c \

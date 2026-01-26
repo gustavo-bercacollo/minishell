@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: klima-do <klima-do@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gbercaco <gbercaco@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 18:45:06 by gbercaco          #+#    #+#             */
-/*   Updated: 2026/01/14 19:46:20 by klima-do         ###   ########.fr       */
+/*   Updated: 2026/01/26 18:50:39 by gbercaco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	print_banner();
 	line = NULL;
 	tokens = NULL;
 	ast = NULL;
