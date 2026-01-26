@@ -1,5 +1,7 @@
 *This project has been created as part of the 42 curriculum by klima-do.*
 
+![Minishell Banner](src/assets/banner.png)
+
 # Minishell
 
 A minimalist shell implementation in C, capable of interpreting and executing Unix commands similar to bash.
