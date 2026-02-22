@@ -1,6 +1,6 @@
 *This project has been created as part of the 42 curriculum by gbercaco and klima-do.*
 
-![Minishell Banner](src/assets/banner.png)
+![Minishell Banner](src/assets/banner_terminal.png)
 
 # Minishell
 
